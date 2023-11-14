@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -12,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[UniqueEntity('phone')]
 #[UniqueEntity('email')]
-class Contact
+class Contacts
 {
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
@@ -38,6 +40,14 @@ class Contact
     #[ORM\Column(length: 255, unique: true, nullable: true)]
     #[Assert\Email]
     private ?string $email = null;
+
+    #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts')]
+    private Collection $Groups;
+
+    public function __construct()
+    {
+        $this->Groups = new ArrayCollection();
+    }
 
     public function getId(): ?Uuid
     {
@@ -100,6 +110,30 @@ class Contact
     public function setEmail(?string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Groups>
+     */
+    public function getGroups(): Collection
+    {
+        return $this->Groups;
+    }
+
+    public function addGroups(Groups $Groups): static
+    {
+        if (!$this->Groups->contains($Groups)) {
+            $this->Groups->add($Groups);
+        }
+
+        return $this;
+    }
+
+    public function removeGroups(Groups $Groups): static
+    {
+        $this->Groups->removeElement($Groups);
 
         return $this;
     }

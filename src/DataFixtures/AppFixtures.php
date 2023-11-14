@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Contact;
+use App\Entity\Contacts;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < 50; ++$i) {
-            $contact = new Contact();
+            $contact = new Contacts();
             $contact->setFirstname($this->faker->firstName);
             $contact->setLastname($this->faker->lastName);
             $contact->setPhone($this->faker->phoneNumber);

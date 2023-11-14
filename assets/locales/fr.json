@@ -1,0 +1,8 @@
+{
+  "ContactCard": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Phone"
+  }
+}
