@@ -2,6 +2,8 @@
 body, html {
   margin: 0;
   padding: 0;
+  background-color: var(--backgroud-color-primary);
+  font-family: 'Noto sans', sans-serif;
 }
 
 p {
@@ -12,18 +14,78 @@ p {
 /* ---------------variables - light theme --------------- */
 
 .light-theme {
+  // text
+  --text-color: #46516c;
+
+  // common
+  --backgroud-color-primary: #f5f6f8;
+
   // navbar
-  --navbar-background-color: #3498db;
-  --navbar-background-selected-color: #2980b9;
-  --navbar-text-color: white;
+  --navbar-background-color: #cfd7e4;
+  --navbar-background-selected-color: #7ecb90;
+  --navbar-text-color-primary: #2e3a58;
+  --navbar-text-color-secondary: #2e3a58;
+
+  // button
+  --text-button-color: #fff;
+
+  --info-button-background-color: #007bff;
+  --info-button-hover-background-color: #0069d9;
+
+  --primary-button-background-color: #7FCD91;
+  --primary-button-hover-background-color: #5A9E6B;
+
+  // card
+  --card-background-color: #f5f6f8;
+  --card-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
+
+  // paginator
+  --paginator-border-color: #2e3a57;
+
+  --paginator-text-selected-color: #393e45;
+  --paginator-background-selected-color: #7FCD91;
+
+  --paginator-text-hover-color: #ffffff;
+  --paginator-background-hover-color: #393e45;
+
 }
 
 
 /* ---------------variables - dark theme --------------- */
 
 .dark-theme {
+  // text
+  --text-color: #e2e2e2;
+
+  // common
+  --backgroud-color-primary: #393e45;
+
   // navbar
-  --navbar-background-color: #2c4052;
-  --navbar-background-selected-color: #4f6c8a;
-  --navbar-text-color: white;
+  --navbar-background-color: #222831;
+  --navbar-background-selected-color: #7ecb90;
+  --navbar-text-color-primary: #fff;
+  --navbar-text-color-secondary: #fff;
+
+
+  // button
+  --text-button-color: #ffffff;
+
+  --info-button-background-color: #007bff;
+  --info-button-hover-background-color: #0069d9;
+
+  --primary-button-background-color: #7FCD91;
+  --primary-button-hover-background-color: #5A9E6B;
+
+  // card
+  --card-background-color: #222831;
+  --card-box-shadow: 1px 2px 4px rgb(126, 203, 144);
+
+  // paginator
+  --paginator-border-color: #ffffff;
+
+  --paginator-text-selected-color: #393e45;
+  --paginator-background-selected-color: #7FCD91;
+
+  --paginator-text-hover-color: #ffffff;
+  --paginator-background-hover-color: #222831;
 }

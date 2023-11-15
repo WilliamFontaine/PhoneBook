@@ -6,7 +6,7 @@ nav.navbar {
   left: 0;
   right: 0;
   background-color: var(--navbar-background-color);
-  color: var(--navbar-text-color);
+  color: var(--navbar-text-color-primary);
   padding: .5rem;
   height: 5rem;
   display: flex;
@@ -41,7 +41,9 @@ nav.navbar {
       a {
         display: flex;
         align-items: center;
-        color: var(--navbar-text-color);
+        color: var(--navbar-text-color-secondary);
+        font-weight: 700;
+        font-size: 1.2rem;
         text-decoration: none;
         margin-left: 20px;
 
@@ -69,6 +71,7 @@ nav.navbar {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      margin-right: 20px;
 
       .icon {
         width: 2rem;

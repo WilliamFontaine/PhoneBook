@@ -1,21 +1,42 @@
+@import "../../App";
 .contact-card {
-  border: 1px solid #ccc;
+  background-color: var(--card-background-color);
+  color: var(--text-color);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-box-shadow);
   width: 300px;
 
-  &__field {
-    display: block;
+  .contact-card__field {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     margin-bottom: 8px;
 
     .property {
       display: inline-block;
-      width: 100px;
+      width: 125px;
       font-weight: bold;
       text-align: right;
       margin-right: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
+
+    .value {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .button-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
   }
 }

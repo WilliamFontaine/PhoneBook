@@ -1,11 +1,10 @@
 import React from 'react';
-const Button = ({type, content, id}) => {
+
+import './Button.scss';
+const Button = ({type, content, link}) => {
     return (
-        <div className="button">
-            {id !== ""
-                ? <a className={type} href={`/contacts/${id}`}>{content}</a>
-                : <a className={type} href={`/contacts/new`}>{content}</a>
-            }
+        <div className={`button button-${type}`}>
+            <a href={link}>{content}</a>
         </div>
 
     )

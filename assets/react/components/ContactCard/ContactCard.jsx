@@ -16,9 +16,11 @@ const ContactCard = ({ contact }) => {
                               value={contact.email} />
             <ContactCardField label={t('ContactCard.field.phone')}
                               value={contact.phone} />
-            <Button type="info"
-                    content={t('ContactCard.button.edit')}
-                    id={contact.id} />
+            <div className="button-actions">
+                <Button type="info"
+                        link={`/contacts/${contact.id}`}
+                        content={t('ContactCard.button.edit')} />
+            </div>
         </div>
     );
 }

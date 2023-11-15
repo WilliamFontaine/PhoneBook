@@ -1,29 +1,37 @@
+@import "../../App";
 .paginator {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-top: 1px solid var(--paginator-border-color);
+  height: 4rem;
+  width: 80%;
 
   .paginator-control {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--text-color);
 
     margin: 0 5px;
     height: 1.5rem;
     width: 1.5em;
     cursor: pointer;
     text-decoration: none;
-    color: #333;
     padding: 5px;
+    font-weight: bold;
 
     &:hover {
-      background-color: lightpink;
+      background-color: var(--paginator-background-hover-color);
       border-radius: 50%;
+      color: var(--paginator-text-hover-color);
     }
 
     &.active-page {
       font-weight: bold;
-      color: #007bff;
+      color: var(--paginator-selected-text-color);
+      background-color: var(--paginator-background-selected-color);
+      border-radius: 50%;
     }
   }
 }

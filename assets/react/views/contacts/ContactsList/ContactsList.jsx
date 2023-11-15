@@ -39,10 +39,14 @@ const ContactsList = () => {
 
     return (
         <div className="contacts-list">
-            <h1>Liste des contacts</h1>
-            <Button id=""
-                    content={t("ContactList.button.new")}
-                    type="success" />
+            <div className="contacts-list__header">
+                <h1>Liste des contacts</h1>
+                <div className="buttons-container">
+                    <Button type="primary"
+                            link="/contacts/new"
+                            content={t('ContactsList.button.new')} />
+                </div>
+            </div>
             <div className="contacts-list__contacts">
                 {displayedContacts.map((contact, index) => (
                     <ContactCard key={index} contact={contact} />
