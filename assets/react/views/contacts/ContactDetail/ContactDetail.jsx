@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ContactsService from "../../../../services/contacts.service";
-import {redirect} from "react-router-dom";
 
 const ContactDetail = ({ id, context }) => {
     const [firstname, setFirstname] = useState('');
@@ -16,7 +15,7 @@ const ContactDetail = ({ id, context }) => {
         } else {
             setAction("POST");
         }
-    }, []);
+    }, [location.search]);
 
     const fetchContact = () => {
         ContactsService.getContactById(id).then(response => {
@@ -38,14 +37,9 @@ const ContactDetail = ({ id, context }) => {
         };
 
         if (action === "POST") {
-            ContactsService.createContact(contact).then(response => {
-
-                window.location.replace(`/contacts/${response.data.id}`);
-
-            });
+            ContactsService.createContact(contact);
         } else {
-            ContactsService.updateContact(id, contact).then(response => {
-            });
+            ContactsService.updateContact(id, contact);
         }
     };
 
@@ -108,7 +102,6 @@ const ContactDetail = ({ id, context }) => {
                         <button type="button" onClick={handleDelete}>Delete</button>
                     </div>
                 )}
-
             </form>
         </div>
     );

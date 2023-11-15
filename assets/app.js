@@ -3,4 +3,4 @@ import './bootstrap.js';
 
 import "./i18n";
 
-registerReactControllerComponents(require.context('./react/views', true, /\.(j|t)sx?$/));
+registerReactControllerComponents(require.context('./react', true, /\.(j|t)sx?$/));

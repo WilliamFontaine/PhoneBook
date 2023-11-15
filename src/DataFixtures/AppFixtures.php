@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 50; ++$i) {
+        for ($i = 0; $i < 200; ++$i) {
             $contact = new Contacts();
             $contact->setFirstname($this->faker->firstName);
             $contact->setLastname($this->faker->lastName);

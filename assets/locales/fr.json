@@ -1,8 +1,25 @@
 {
+  "navbar": {
+    "title": "Annuaire",
+    "item": {
+      "contacts": "Liste des contacts",
+      "groups": "Liste des groupes de contacts"
+    }
+  },
   "ContactCard": {
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "Email",
-    "phone": "Phone"
+    "field": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone"
+    },
+    "button": {
+      "edit": "Modifier"
+    }
+  },
+  "ContactList": {
+    "button": {
+      "new": "Nouveau contact"
+    }
   }
 }

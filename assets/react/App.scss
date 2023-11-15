@@ -1,0 +1,29 @@
+/* --------------- reset sccc --------------- */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  line-height: 1rem;
+  margin: 0;
+}
+
+/* ---------------variables - light theme --------------- */
+
+.light-theme {
+  // navbar
+  --navbar-background-color: #3498db;
+  --navbar-background-selected-color: #2980b9;
+  --navbar-text-color: white;
+}
+
+
+/* ---------------variables - dark theme --------------- */
+
+.dark-theme {
+  // navbar
+  --navbar-background-color: #2c4052;
+  --navbar-background-selected-color: #4f6c8a;
+  --navbar-text-color: white;
+}

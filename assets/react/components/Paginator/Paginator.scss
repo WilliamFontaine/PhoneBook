@@ -1,0 +1,29 @@
+.paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .paginator-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 5px;
+    height: 1.5rem;
+    width: 1.5em;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+
+    &:hover {
+      background-color: lightpink;
+      border-radius: 50%;
+    }
+
+    &.active-page {
+      font-weight: bold;
+      color: #007bff;
+    }
+  }
+}

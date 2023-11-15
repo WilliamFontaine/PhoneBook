@@ -8,16 +8,16 @@ const ContactCard = ({ contact }) => {
 
     return (
         <div className="contact-card">
-            <ContactCardField label={t('ContactCard.firstName')}
+            <ContactCardField label={t('ContactCard.field.firstName')}
                               value={contact.firstname} />
-            <ContactCardField label={t('ContactCard.lastName')}
+            <ContactCardField label={t('ContactCard.field.lastName')}
                               value={contact.lastname} />
-            <ContactCardField label={t('ContactCard.email')}
+            <ContactCardField label={t('ContactCard.field.email')}
                               value={contact.email} />
-            <ContactCardField label={t('ContactCard.phone')}
+            <ContactCardField label={t('ContactCard.field.phone')}
                               value={contact.phone} />
             <Button type="info"
-                    content={t('ContactCard.edit')}
+                    content={t('ContactCard.button.edit')}
                     id={contact.id} />
         </div>
     );

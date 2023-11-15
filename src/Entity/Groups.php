@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: GroupsRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity('name', message: 'unique')]
 class Groups
 {
     #[ORM\Id]

@@ -12,6 +12,10 @@
         {% endblock %}
     </head>
     <body>
-    {% block body %}{% endblock %}
+    <div {{ react_component('App') }}></div>
+    <div {{ react_component('components/NavBar/NavBar') }}></div>
+    <main>
+        {% block body %}{% endblock %}
+    </main>
     </body>
 </html>

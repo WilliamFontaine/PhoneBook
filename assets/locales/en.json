@@ -1,8 +1,25 @@
 {
+  "navbar": {
+    "title": "Phone book",
+    "item": {
+      "contacts": "List of Contacts",
+      "groups": "List of Contact Groups"
+    }
+  },
   "ContactCard": {
-    "firstName": "First name",
-    "lastName": "Last name",
-    "email": "Email",
-    "phone": "Phone"
+    "field": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "button": {
+      "edit": "Edit"
+    }
+  },
+  "ContactList": {
+    "button": {
+      "new": "New Contact"
+    }
   }
 }

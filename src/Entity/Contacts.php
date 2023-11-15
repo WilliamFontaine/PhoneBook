@@ -12,8 +12,8 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
-#[UniqueEntity('phone')]
-#[UniqueEntity('email')]
+#[UniqueEntity('phone', message: 'unique')]
+#[UniqueEntity('email', message: 'unique')]
 class Contacts
 {
     #[ORM\Id]
@@ -23,22 +23,22 @@ class Contacts
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotNull]
+    #[Assert\NotNull(message: 'not_null')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotNull]
+    #[Assert\NotNull(message: 'not_null')]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotNull]
+    #[Assert\NotNull(message: 'not_null')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilePicture = null;
 
     #[ORM\Column(length: 255, unique: true, nullable: true)]
-    #[Assert\Email]
+    #[Assert\Email(message: 'email_format')]
     private ?string $email = null;
 
     #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts')]
