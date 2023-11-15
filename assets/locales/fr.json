@@ -17,6 +17,23 @@
       "edit": "Modifier"
     }
   },
+  "ContactDetail": {
+    "field": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone"
+    },
+    "button": {
+      "submit": "Enregistrer",
+      "delete": "Supprimer"
+    },
+    "toast": {
+      "success": "Contact enregistré avec succès",
+      "updated": "Contact mis à jour avec succès",
+      "error": "Une erreur est survenue"
+    }
+  },
   "ContactsList": {
     "button": {
       "new": "Nouveau contact"

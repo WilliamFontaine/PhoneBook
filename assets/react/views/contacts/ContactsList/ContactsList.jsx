@@ -46,6 +46,8 @@ const ContactsList = () => {
                             link="/contacts/new"
                             content={t('ContactsList.button.new')} />
                 </div>
+
+            {/* TODO: ajouter la recherhche dans les contacts (dans les champs classiques mais aussi dans les champs étendus) */}
             </div>
             <div className="contacts-list__contacts">
                 {displayedContacts.map((contact, index) => (

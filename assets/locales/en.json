@@ -17,6 +17,23 @@
       "edit": "Edit"
     }
   },
+  "ContactDetail": {
+    "field": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "button": {
+      "submit": "Save",
+      "delete": "Delete"
+    },
+    "toast": {
+      "success": "Contact successfully created",
+      "updated": "Contact successfully updated",
+      "error": "An error occurred while saving the contact"
+    }
+  },
   "ContactsList": {
     "button": {
       "new": "New Contact"

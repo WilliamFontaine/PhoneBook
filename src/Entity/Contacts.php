@@ -32,6 +32,7 @@ class Contacts
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotNull(message: 'not_null')]
+    #[Assert\Regex(pattern: '/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/', message: 'phone_format')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -44,9 +45,13 @@ class Contacts
     #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts')]
     private Collection $Groups;
 
+    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $contactExtendedFields;
+
     public function __construct()
     {
         $this->Groups = new ArrayCollection();
+        $this->contactExtendedFields = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -134,6 +139,36 @@ class Contacts
     public function removeGroups(Groups $Groups): static
     {
         $this->Groups->removeElement($Groups);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ContactExtendedFields>
+     */
+    public function getContactExtendedFields(): Collection
+    {
+        return $this->contactExtendedFields;
+    }
+
+    public function addContactExtendedField(ContactExtendedFields $contactExtendedField): static
+    {
+        if (!$this->contactExtendedFields->contains($contactExtendedField)) {
+            $this->contactExtendedFields->add($contactExtendedField);
+            $contactExtendedField->setContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContactExtendedField(ContactExtendedFields $contactExtendedField): static
+    {
+        if ($this->contactExtendedFields->removeElement($contactExtendedField)) {
+            // set the owning side to null (unless already changed)
+            if ($contactExtendedField->getContact() === $this) {
+                $contactExtendedField->setContact(null);
+            }
+        }
 
         return $this;
     }
