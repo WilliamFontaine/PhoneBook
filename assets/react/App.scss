@@ -11,6 +11,12 @@ p {
   margin: 0;
 }
 
+h1 {
+  font-size: 2rem;
+
+  color: var(--text-color);
+}
+
 /* ---------------variables - light theme --------------- */
 
 .light-theme {
@@ -35,6 +41,12 @@ p {
   --primary-button-background-color: #7FCD91;
   --primary-button-hover-background-color: #5A9E6B;
 
+  --secondary-button-background-color: #6c757d;
+  --secondary-button-hover-background-color: #5a6268;
+
+  --danger-button-background-color: #dc3545;
+  --danger-button-hover-background-color: #bd2130;
+
   // card
   --card-background-color: #f5f6f8;
   --card-box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
@@ -48,6 +60,10 @@ p {
   --paginator-text-hover-color: #ffffff;
   --paginator-background-hover-color: #393e45;
 
+  // input
+  --input-background-color: #cdd5e2;
+  --input-text-color: #2e3a57;
+  --input-text-error-color: #dc3545;
 }
 
 
@@ -76,6 +92,12 @@ p {
   --primary-button-background-color: #7FCD91;
   --primary-button-hover-background-color: #5A9E6B;
 
+  --secondary-button-background-color: #6c757d;
+  --secondary-button-hover-background-color: #5a6268;
+
+  --danger-button-background-color: #dc3545;
+  --danger-button-hover-background-color: #bd2130;
+
   // card
   --card-background-color: #222831;
   --card-box-shadow: 1px 2px 4px rgb(126, 203, 144);
@@ -88,4 +110,9 @@ p {
 
   --paginator-text-hover-color: #ffffff;
   --paginator-background-hover-color: #222831;
+
+  // input
+  --input-background-color: #222831;
+  --input-text-color: #ffffff;
+  --input-text-error-color: #dc3545;
 }

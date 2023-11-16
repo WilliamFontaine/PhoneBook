@@ -26,12 +26,21 @@
     },
     "button": {
       "submit": "Enregistrer",
-      "delete": "Supprimer"
+      "delete": "Supprimer",
+      "return": "Retour"
     },
     "toast": {
       "success": "Contact enregistré avec succès",
       "updated": "Contact mis à jour avec succès",
-      "error": "Une erreur est survenue"
+      "error": "Une erreur est survenue",
+      "deleted": "Contact supprimé avec succès"
+    },
+    "error": {
+      "unique": "Ce champ doit être unique.",
+      "not_null": "Ce champ ne peut pas être vide.",
+      "not_blank": "Ce champ ne peut pas être vide.",
+      "phone_format": "Le format du numéro de téléphone est invalide.",
+      "email_format": "Le format de l'email est invalide."
     }
   },
   "ContactsList": {

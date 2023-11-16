@@ -24,14 +24,17 @@ class Contacts
 
     #[ORM\Column(length: 255)]
     #[Assert\NotNull(message: 'not_null')]
+    #[Assert\NotBlank(message: 'not_blank')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotNull(message: 'not_null')]
+    #[Assert\NotBlank(message: 'not_blank')]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotNull(message: 'not_null')]
+    #[Assert\NotBlank(message: 'not_blank')]
     #[Assert\Regex(pattern: '/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/', message: 'phone_format')]
     private ?string $phone = null;
 

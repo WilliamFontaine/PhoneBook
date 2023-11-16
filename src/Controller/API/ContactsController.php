@@ -91,12 +91,12 @@ class ContactsController extends AbstractController
 
             $existingPhoneContact = $em->getRepository(Contacts::class)->findOneBy(['phone' => $updatedContact->getPhone()]);
             if ($existingPhoneContact && $existingPhoneContact !== $contact) {
-                return new JsonResponse(['error' => 'Phone number is already used.'], Response::HTTP_BAD_REQUEST);
+                return new JsonResponse([['property_path' => 'phone', 'message' => 'unique']], Response::HTTP_BAD_REQUEST);
             }
 
             $existingEmailContact = $em->getRepository(Contacts::class)->findOneBy(['email' => $updatedContact->getEmail()]);
             if ($existingEmailContact && $existingEmailContact !== $contact) {
-                return new JsonResponse(['error' => 'Email is already used.'], Response::HTTP_BAD_REQUEST);
+                return new JsonResponse([['property_path' => 'email', 'message' => 'unique']], Response::HTTP_BAD_REQUEST);
             }
 
             $contact->setPhone($updatedContact->getPhone());

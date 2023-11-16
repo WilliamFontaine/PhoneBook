@@ -1,0 +1,41 @@
+.input-field {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+  height: 5rem;
+
+
+  label {
+    font-size: 1.2rem;
+    width: 25%;
+    display: inline-block;
+    text-align: right;
+    margin-right: 2rem;
+    margin-top:4px;
+    color: var(--input-text-color);
+  }
+
+  .input {
+    width: 75%;
+    display: inline-block;
+    font-size: 1.2rem;
+
+
+    input {
+      width: 80%;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background-color: var(--input-background-color);
+      color: var(--input-text-color);
+    }
+
+    .error {
+      color: var(--input-text-error-color);
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+}

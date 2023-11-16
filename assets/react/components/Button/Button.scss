@@ -12,6 +12,14 @@ div.button {
     text-decoration: none;
   }
 
+  button {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font-size: inherit;
+    cursor: pointer;
+  }
+
   &.button-info {
     background-color: var(--info-button-background-color);
     color: var(--text-button-color);
@@ -27,6 +35,24 @@ div.button {
 
     &:hover {
       background-color: var(--primary-button-hover-background-color);
+    }
+  }
+
+  &.button-secondary {
+    background-color: var(--secondary-button-background-color);
+    color: var(--text-button-color);
+
+    &:hover {
+      background-color: var(--secondary-button-hover-background-color);
+    }
+  }
+
+  &.button-danger {
+    background-color: var(--danger-button-background-color);
+    color: var(--text-button-color);
+
+    &:hover {
+      background-color: var(--danger-button-hover-background-color);
     }
   }
 }

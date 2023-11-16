@@ -4,6 +4,7 @@ import ContactCard from "../../../components/ContactCard/ContactCard";
 import {useTranslation} from "react-i18next";
 import Button from "../../../components/Button/Button";
 import Paginator from "../../../components/Paginator/Paginator";
+import toast from "react-hot-toast";
 
 import "./ContactsList.scss";
 
@@ -20,6 +21,12 @@ const ContactsList = () => {
 
     useEffect(() => {
         fetchContacts();
+
+        if (localStorage.getItem("toast")) {
+            const message = JSON.parse(localStorage.getItem("toast"));
+            toast[message.type](message.message);
+            localStorage.removeItem("toast");
+        }
     }, []);
 
     const fetchContacts =  () => {

@@ -26,12 +26,21 @@
     },
     "button": {
       "submit": "Save",
-      "delete": "Delete"
+      "delete": "Delete",
+      "return": "Return"
     },
     "toast": {
       "success": "Contact successfully created",
       "updated": "Contact successfully updated",
-      "error": "An error occurred while saving the contact"
+      "error": "An error occurred while saving the contact",
+      "deleted": "Contact successfully deleted"
+    },
+    "error": {
+      "unique": "This field must be unique.",
+      "not_null": "This field cannot be empty.",
+      "not_blank": "This field cannot be blank.",
+      "phone_format": "Invalid phone number format.",
+      "email_format": "Invalid email format."
     }
   },
   "ContactsList": {
