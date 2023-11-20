@@ -26,4 +26,7 @@ services:
     App\ExceptionHandler\CustomExceptionHandler:
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.exception' }
-
+    
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/images/profiles'

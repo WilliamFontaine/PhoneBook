@@ -8,7 +8,7 @@ import FormButton from "../../../components/Button/FormButton";
 import FormInput from "../../../components/FormInput/FormInput";
 import Button from "../../../components/Button/Button";
 
-const ContactDetail = ({id, context}) => {
+const ContactDetail = ({id}) => {
     const [contact, setContact] = useState(null);
     const [errors, setErrors] = useState([]);
     const [action, setAction] = useState(null);
@@ -95,11 +95,19 @@ const ContactDetail = ({id, context}) => {
         }));
     };
 
+    const handleProfilePictureChange = (event) => {
+        const {name, files} = event.target;
+        setContact(prevContact => ({
+            ...prevContact,
+            [name]: files[0]
+        }));
+    }
+
     return (
         <div className="contact-detail">
             <h1>Contact Detail</h1>
             {contact && (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} encType={"multipart/form-data"}>
                     <FormInput label={t('ContactDetail.field.firstName')}
                                type="text"
                                name="firstname"
@@ -124,8 +132,13 @@ const ContactDetail = ({id, context}) => {
                                value={contact.phone}
                                onChange={handleInputChange}
                                error={errors.phone}/>
+                    <FormInput label={t('ContactDetail.field.profilePicture')}
+                               type="file"
+                               name="profilePicture"
+                               value={contact.profilePicture}
+                               onChange={handleProfilePictureChange}
+                               error={errors.profilePicture}/>
 
-                    {/* TODO: ajouter la photo de profil */}
 
                     {/* TODO: ajouter des champ aditionnel à la vollée */}
 

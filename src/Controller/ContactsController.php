@@ -22,8 +22,7 @@ class ContactsController extends AbstractController
     public function new(): Response
     {
         return $this->render("contacts/detail.html.twig", [
-            'id' => null,
-            'context' => 'new'
+            'id' => null
         ]);
     }
 
@@ -31,8 +30,7 @@ class ContactsController extends AbstractController
     public function show(string $id): Response
     {
         return $this->render("contacts/detail.html.twig", [
-            'id' => $id,
-            'context' => 'edit'
+            'id' => $id
         ]);
     }
 }

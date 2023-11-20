@@ -12,11 +12,19 @@ class ContactsService {
     }
 
     async createContact (contact) {
-        return await api.post(ContactsService.CONTACT_API_URL, contact);
+        return await api.post(ContactsService.CONTACT_API_URL, contact, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
     async updateContact (id, contact) {
-        return await api.put(`${ContactsService.CONTACT_API_URL}/${id}`, contact);
+        return await api.put(`${ContactsService.CONTACT_API_URL}/${id}`, contact, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
     async deleteContact (id) {

@@ -5,10 +5,13 @@ namespace App\Controller\API;
 use App\Entity\Contacts;
 use App\Exception\InvalidUuidException;
 use App\Repository\ContactRepository;
+use App\Service\FileUploader;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,15 +53,36 @@ class ContactsController extends AbstractController
 
 
     #[Route('', name: 'app_api_contacts_add', methods: ['POST'])]
-    public function add(ValidatorInterface $validator, SerializerInterface $serializer, Request $request, EntityManagerInterface $em): JsonResponse
-    {
-        $data = $request->getContent();
-        $contact = $serializer->deserialize($data, Contacts::class, 'json');
+    public function add(
+        Request $request,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator,
+        EntityManagerInterface $em,
+        FileUploader $fileUploader
+    ): JsonResponse {
+        $data = $request->request->all();
+
+        $file = $request->files->get('profilePicture');
+
+        $contact = $serializer->deserialize(json_encode($data), Contacts::class, 'json');
+
+        $contact->setCreatedAt(new DateTimeImmutable());
+        $contact->setUpdatedAt(new DateTimeImmutable());
 
         $violations = $validator->validate($contact);
 
         if ($violations->count() > 0) {
             return new JsonResponse($serializer->serialize($violations, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
+
+
+        if ($file instanceof UploadedFile) {
+            $contact = new Contacts();
+            $contact->setImageFile($file);
+
+            $fileName = $fileUploader->upload($file);
+
+            $contact->setImageName($fileName);
         }
 
         $em->persist($contact);

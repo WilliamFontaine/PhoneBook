@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,10 +11,12 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[UniqueEntity('phone', message: 'unique')]
-#[UniqueEntity('email', message: 'unique')]
 class Contacts
 {
     #[ORM\Id]
@@ -38,12 +41,15 @@ class Contacts
     #[Assert\Regex(pattern: '/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/', message: 'phone_format')]
     private ?string $phone = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profilePicture = null;
-
-    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\Email(message: 'email_format')]
     private ?string $email = null;
+
+    #[Vich\UploadableField(mapping: 'profile_picture', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $imageName = null;
 
     #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts')]
     private Collection $Groups;
@@ -51,10 +57,20 @@ class Contacts
     #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $contactExtendedFields;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull]
+    private ?DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull]
+    private ?DateTimeImmutable $updatedAt;
+
     public function __construct()
     {
         $this->Groups = new ArrayCollection();
         $this->contactExtendedFields = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?Uuid
@@ -98,18 +114,6 @@ class Contacts
         return $this;
     }
 
-    public function getProfilePicture(): ?string
-    {
-        return $this->profilePicture;
-    }
-
-    public function setProfilePicture(?string $profilePicture): static
-    {
-        $this->profilePicture = $profilePicture;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -121,6 +125,42 @@ class Contacts
 
         return $this;
     }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
 
     /**
      * @return Collection<int, Groups>
@@ -172,6 +212,30 @@ class Contacts
                 $contactExtendedField->setContact(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

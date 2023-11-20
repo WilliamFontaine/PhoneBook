@@ -17,4 +17,5 @@ return [
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
+    Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
 ];
