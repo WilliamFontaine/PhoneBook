@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {CiCloudMoon, CiSun} from "react-icons/ci";
-
+import { IoMdCloudyNight, IoMdSunny} from "react-icons/io";
 
 import enFlag from "../../../images/flags/en.png";
 import frFlag from "../../../images/flags/fr.png";
@@ -76,9 +75,9 @@ const NavBar = () => {
 
             <div className="switchers">
                 <div className="theme-switcher">
-                    { selectedTheme === "light"
-                        ? <CiSun className="icon" onClick={handleChangeTheme("dark")} />
-                        : <CiCloudMoon className="icon" onClick={handleChangeTheme("light")} />
+                    {selectedTheme === "light"
+                        ? <IoMdSunny className="icon" onClick={handleChangeTheme("dark")}/>
+                        : <IoMdCloudyNight className="icon" onClick={handleChangeTheme("light")}/>
                     }
                 </div>
 
