@@ -9,7 +9,7 @@ import Button from "../../../components/Button/Button";
 import ContactsController from "../../../../controllers/contacts.controller";
 
 const ContactDetail = ({id}) => {
-    const [contact, setContact] = useState(null);
+    const [contact, setContact] = useState({});
     const [errors, setErrors] = useState([]);
     const [action, setAction] = useState(null);
     const {t} = useTranslation();
@@ -21,12 +21,6 @@ const ContactDetail = ({id}) => {
             setAction("PUT");
         } else {
             setAction("POST");
-            setContact({
-                firstname: "",
-                lastname: "",
-                email: "",
-                phone: ""
-            });
         }
     }, [location.search]);
 
@@ -111,25 +105,25 @@ const ContactDetail = ({id}) => {
                     <FormInput label={t('ContactDetail.field.firstName')}
                                type="text"
                                name="firstname"
-                               value={contact.firstname}
+                               value={contact.firstname || ""}
                                onChange={handleInputChange}
                                error={errors.firstname}/>
                     <FormInput label={t('ContactDetail.field.lastName')}
                                type="text"
                                name="lastname"
-                               value={contact.lastname}
+                               value={contact.lastname || ""}
                                onChange={handleInputChange}
                                error={errors.lastname}/>
                     <FormInput label={t('ContactDetail.field.email')}
                                type="text"
                                name="email"
-                               value={contact.email}
+                               value={contact.email || ""}
                                onChange={handleInputChange}
                                error={errors.email}/>
                     <FormInput label={t('ContactDetail.field.phone')}
                                type="text"
                                name="phone"
-                               value={contact.phone}
+                               value={contact.phone || ""}
                                onChange={handleInputChange}
                                error={errors.phone}/>
                     <FormInput label={t('ContactDetail.field.profilePicture')}

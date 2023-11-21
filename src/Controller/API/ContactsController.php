@@ -54,12 +54,13 @@ class ContactsController extends AbstractController
 
     #[Route('', name: 'app_api_contacts_add', methods: ['POST'])]
     public function add(
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator,
+        Request                $request,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator,
         EntityManagerInterface $em,
-        FileUploader $fileUploader
-    ): JsonResponse {
+        FileUploader           $fileUploader
+    ): JsonResponse
+    {
         $data = $request->request->all();
 
         $contact = $serializer->deserialize(json_encode($data), Contacts::class, 'json');
@@ -92,7 +93,14 @@ class ContactsController extends AbstractController
      * @throws InvalidUuidException
      */
     #[Route('/{id}', name: 'app_api_contacts_update', methods: ['PUT'])]
-    public function update(ValidatorInterface $validator, SerializerInterface $serializer, Request $request, EntityManagerInterface $em, ContactRepository $contactRepository, string $id): JsonResponse
+    public function update(
+        Request                $request,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator,
+        EntityManagerInterface $em,
+        ContactRepository      $contactRepository,
+        string                 $id
+    ): JsonResponse
     {
         try {
             $uuid = Uuid::fromString($id);
@@ -105,9 +113,9 @@ class ContactsController extends AbstractController
 
             // TODO: handle file
 
-            $data = $request->getContent();
+            $data = $request->request->all();
 
-            $updatedContact = $serializer->deserialize($data, Contacts::class, 'json');
+            $updatedContact = $serializer->deserialize(json_encode($data), Contacts::class, 'json');
 
             $contact->setFirstname($updatedContact->getFirstname());
             $contact->setLastname($updatedContact->getLastname());
