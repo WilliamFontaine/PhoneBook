@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import ContactsService from "../../../../services/contacts.service";
 import {useTranslation} from "react-i18next";
 import toast from "react-hot-toast";
 
@@ -7,6 +6,7 @@ import "./ContactDetail.scss";
 import FormButton from "../../../components/Button/FormButton";
 import FormInput from "../../../components/FormInput/FormInput";
 import Button from "../../../components/Button/Button";
+import ContactsController from "../../../../controllers/contacts.controller";
 
 const ContactDetail = ({id}) => {
     const [contact, setContact] = useState(null);
@@ -31,7 +31,7 @@ const ContactDetail = ({id}) => {
     }, [location.search]);
 
     const fetchContact = () => {
-        ContactsService.getContactById(id).then(response => {
+        ContactsController.getContactById(id).then(response => {
             setContact(response.data);
         });
     };
@@ -40,7 +40,7 @@ const ContactDetail = ({id}) => {
         event.preventDefault();
 
         if (action === "POST") {
-            ContactsService.createContact(contact).then(response => {
+            ContactsController.createContact(contact).then(response => {
                 setContact(response.data);
                 setAction("PUT");
                 setErrors([]);
@@ -52,7 +52,7 @@ const ContactDetail = ({id}) => {
                 }
             );
         } else {
-            ContactsService.updateContact(contact.id, contact).then(response => {
+            ContactsController.updateContact(contact.id, contact).then(response => {
                 setContact(response.data);
                 toast.success(t('ContactDetail.toast.updated'));
                 setErrors([])
@@ -77,7 +77,7 @@ const ContactDetail = ({id}) => {
 
     const handleDelete = (event) => {
         event.preventDefault();
-        ContactsService.deleteContact(id).then(response => {
+        ContactsController.deleteContact(id).then(response => {
             setContact(response.data);
             localStorage.setItem("toast", JSON.stringify({
                 type: "success",

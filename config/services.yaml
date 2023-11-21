@@ -28,5 +28,8 @@ services:
             - { name: 'kernel.event_listener', event: 'kernel.exception' }
     
     App\Service\FileUploader:
+      arguments:
+        $targetDirectory: '%kernel.project_dir%/public/images/profiles'
+    App\Controller\API\ImageController:
         arguments:
             $targetDirectory: '%kernel.project_dir%/public/images/profiles'

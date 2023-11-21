@@ -16,6 +16,8 @@ const ContactCard = ({ contact }) => {
                               value={contact.email} />
             <ContactCardField label={t('ContactCard.field.phone')}
                               value={contact.phone} />
+            {contact.image_name && <img id={contact.image_name} alt="contact image" className="image" />}
+            {/*TODO: improve image display*/}
             <div className="button-actions">
                 <Button type="info"
                         link={`/contacts/${contact.id}`}

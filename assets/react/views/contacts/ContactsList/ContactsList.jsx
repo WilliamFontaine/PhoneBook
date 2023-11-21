@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import ContactsService from "../../../../services/contacts.service";
 import ContactCard from "../../../components/ContactCard/ContactCard";
 import {useTranslation} from "react-i18next";
 import Button from "../../../components/Button/Button";
@@ -7,6 +6,8 @@ import Paginator from "../../../components/Paginator/Paginator";
 import toast from "react-hot-toast";
 
 import "./ContactsList.scss";
+import ContactsController from "../../../../controllers/contacts.controller";
+import ImagesController from "../../../../controllers/images.controller";
 
 const ContactsList = () => {
     const { t } = useTranslation();
@@ -30,10 +31,24 @@ const ContactsList = () => {
     }, []);
 
     const fetchContacts =  () => {
-        ContactsService.getAllContacts().then(response => {
+        ContactsController.getAllContacts().then(response => {
             setContacts(response.data);
             setDisplayedContacts(response.data.slice(0, contactsPerPage));
             setTotalPages(Math.ceil(response.data.length / contactsPerPage));
+
+            response.data.forEach(contact => {
+              // TODO: do a generic method
+                if (contact.image_name) {
+                    ImagesController.getImageByName(contact.image_name)
+                        .then(res => {
+                            const blob = new Blob([res.data]);
+                            const url = URL.createObjectURL(blob);
+                            const img = document.getElementById(contact.image_name)
+                            img.src = url;
+                            img.onload = e => URL.revokeObjectURL(url);
+                    })
+                }
+            })
         });
     }
 

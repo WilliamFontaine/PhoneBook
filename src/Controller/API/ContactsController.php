@@ -62,8 +62,6 @@ class ContactsController extends AbstractController
     ): JsonResponse {
         $data = $request->request->all();
 
-        $file = $request->files->get('profilePicture');
-
         $contact = $serializer->deserialize(json_encode($data), Contacts::class, 'json');
 
         $contact->setCreatedAt(new DateTimeImmutable());
@@ -75,14 +73,13 @@ class ContactsController extends AbstractController
             return new JsonResponse($serializer->serialize($violations, 'json'), Response::HTTP_BAD_REQUEST, [], true);
         }
 
+        $file = $request->files->get('profilePicture');
 
         if ($file instanceof UploadedFile) {
-            $contact = new Contacts();
-            $contact->setImageFile($file);
+            $newFile = $fileUploader->upload($file);
+            $contact->setImageFile($newFile);
 
-            $fileName = $fileUploader->upload($file);
-
-            $contact->setImageName($fileName);
+            $contact->setImageName($newFile->getFilename());
         }
 
         $em->persist($contact);
@@ -106,12 +103,16 @@ class ContactsController extends AbstractController
                 return new JsonResponse(null, Response::HTTP_NOT_FOUND);
             }
 
+            // TODO: handle file
+
             $data = $request->getContent();
 
             $updatedContact = $serializer->deserialize($data, Contacts::class, 'json');
 
             $contact->setFirstname($updatedContact->getFirstname());
             $contact->setLastname($updatedContact->getLastname());
+            $contact->setUpdatedAt(new DateTimeImmutable());
+            $contact->setCreatedAt($contact->getCreatedAt());
 
             $existingPhoneContact = $em->getRepository(Contacts::class)->findOneBy(['phone' => $updatedContact->getPhone()]);
             if ($existingPhoneContact && $existingPhoneContact !== $contact) {
@@ -122,6 +123,8 @@ class ContactsController extends AbstractController
             if ($existingEmailContact && $existingEmailContact !== $contact) {
                 return new JsonResponse([['property_path' => 'email', 'message' => 'unique']], Response::HTTP_BAD_REQUEST);
             }
+
+            // TODO: handle delete file
 
             $contact->setPhone($updatedContact->getPhone());
             $contact->setEmail($updatedContact->getEmail());
@@ -154,6 +157,8 @@ class ContactsController extends AbstractController
             if (!$contact) {
                 return new JsonResponse(null, Response::HTTP_NOT_FOUND);
             }
+
+//            TODO: handle delte file
 
             $em->remove($contact);
             $em->flush();
