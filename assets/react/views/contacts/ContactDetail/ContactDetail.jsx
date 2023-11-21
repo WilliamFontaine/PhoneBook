@@ -89,6 +89,7 @@ const ContactDetail = ({id}) => {
         }));
     };
 
+    // TODO: gérer l'image dans un autre appel API / faire uniquement POST pour l'image
     const handleProfilePictureChange = (event) => {
         const {name, files} = event.target;
         setContact(prevContact => ({
