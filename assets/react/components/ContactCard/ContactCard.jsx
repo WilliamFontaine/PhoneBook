@@ -3,7 +3,7 @@ import React from 'react';
 import './ContactCard.scss';
 import {useTranslation} from "react-i18next";
 import Button from "../Button/Button";
-const ContactCard = ({ contact }) => {
+const ContactCard = ({ contact, imageUrl }) => {
     const { t } = useTranslation();
 
     return (
@@ -19,7 +19,7 @@ const ContactCard = ({ contact }) => {
                                   value={contact.phone} />
             </div>
 
-            {contact.image_name && <ContactCardImage image_name={contact.image_name} />}
+            {imageUrl && <ContactCardImage imageUrl={imageUrl} />}
 
             <div className="button-actions">
                 <Button type="info"
@@ -39,10 +39,10 @@ const ContactCardField = ({label, value}) => {
     );
 }
 
-const ContactCardImage = ({image_name}) => {
+const ContactCardImage = ({imageUrl}) => {
     return (
         <div className="contact-card__image">
-            <img id={image_name} alt="contact image" className="image" />
+            <img src={imageUrl} alt="contact image" className="image" />
         </div>
     );
 }

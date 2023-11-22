@@ -11,14 +11,15 @@ import ImagesController from "../../../../controllers/images.controller";
 import ImageService from "../../../../services/image.service";
 
 const ContactsList = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const [contacts, setContacts] = useState([]);
     const [displayedContacts, setDisplayedContacts] = useState([]);
+    const [contactImages, setContactImages] = useState({});
 
-    const[currentPage, setCurrentPage] = useState(0);
-    const[totalPages, setTotalPages] = useState(0);
-    const[contactsPerPage] = useState(20);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [contactsPerPage] = useState(20);
 
 
     useEffect(() => {
@@ -31,7 +32,7 @@ const ContactsList = () => {
         }
     }, []);
 
-    const fetchContacts =  () => {
+    const fetchContacts = () => {
         ContactsController.getAllContacts().then(response => {
             setContacts(response.data);
             setDisplayedContacts(response.data.slice(0, contactsPerPage));
@@ -41,8 +42,12 @@ const ContactsList = () => {
                 if (contact.image_name) {
                     ImagesController.getImageByName(contact.image_name)
                         .then(res => {
-                            ImageService.handleFile(res.data, contact.image_name)
-                    })
+                            const imageUrl = ImageService.handleFile(res.data, contact.id);
+                            setContactImages((prevImages) => ({
+                                ...prevImages,
+                                [contact.id]: imageUrl,
+                            }));
+                        })
                 }
             })
         });
@@ -62,18 +67,22 @@ const ContactsList = () => {
                 <div className="buttons-container">
                     <Button type="primary"
                             link="/contacts/new"
-                            content={t('ContactsList.button.new')} />
+                            content={t('ContactsList.button.new')}/>
                 </div>
 
-            {/* TODO: ajouter la recherhche dans les contacts (dans les champs classiques mais aussi dans les champs étendus) */}
+                {/* TODO: ajouter la recherhche dans les contacts (dans les champs classiques mais aussi dans les champs étendus) */}
             </div>
             <div className="contacts-list__contacts">
                 {displayedContacts.map((contact, index) => (
-                    <ContactCard key={index} contact={contact} />
+                    <ContactCard key={index}
+                                 contact={contact}
+                                 imageUrl={contactImages[contact.id]}/>
                 ))
                 }
             </div>
-            <Paginator currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => handlePageChange(page)} />
+            <Paginator currentPage={currentPage}
+                       totalPages={totalPages}
+                       onPageChange={(page) => handlePageChange(page)}/>
         </div>
     );
 }
