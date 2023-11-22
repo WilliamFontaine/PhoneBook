@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231120212134 extends AbstractMigration
+final class Version20231122172834 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,7 @@ final class Version20231120212134 extends AbstractMigration
         $this->addSql('CREATE TABLE contact_extended_fields (id INT NOT NULL, contact_id UUID NOT NULL, field_name VARCHAR(255) NOT NULL, field_value VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_ACB6CF23E7A1254A ON contact_extended_fields (contact_id)');
         $this->addSql('COMMENT ON COLUMN contact_extended_fields.contact_id IS \'(DC2Type:uuid)\'');
-        $this->addSql('CREATE TABLE contacts (id UUID NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, image_name VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE contacts (id UUID NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, email VARCHAR(255) DEFAULT NULL, image_name VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_33401573444F97DD ON contacts (phone)');
         $this->addSql('COMMENT ON COLUMN contacts.id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN contacts.created_at IS \'(DC2Type:datetime_immutable)\'');

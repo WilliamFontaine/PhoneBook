@@ -12,19 +12,11 @@ class ContactsController {
     }
 
     async createContact (contact) {
-        return await api.post(ContactsController.CONTACT_API_URL, contact, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        return await api.post(ContactsController.CONTACT_API_URL, contact);
     }
 
     async updateContact (id, contact) {
-        return await api.put(`${ContactsController.CONTACT_API_URL}/${id}`, contact, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        return await api.put(`${ContactsController.CONTACT_API_URL}/${id}`, contact);
     }
 
     async deleteContact (id) {

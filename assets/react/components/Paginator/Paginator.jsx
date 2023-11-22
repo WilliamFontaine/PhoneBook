@@ -35,9 +35,9 @@ const Paginator = ({ currentPage, totalPages, onPageChange }) => {
     return (
         <div className="paginator">
             <a className="paginator-control" onClick={() => onPageChange(0)}>&lt;&lt;</a>
-            <a className="paginator-control" onClick={() => onPageChange(currentPage - 1)}>&lt;</a>
+            <a className="paginator-control" onClick={() => onPageChange(Math.max(currentPage - 1, 0))}>&lt;</a>
             {renderPageNumbers()}
-            <a className="paginator-control" onClick={() => onPageChange(currentPage + 1)}>&gt;</a>
+            <a className="paginator-control" onClick={() => onPageChange(Math.min(currentPage + 1, totalPages - 1))}>&gt;</a>
             <a className="paginator-control" onClick={() => onPageChange(totalPages - 1)}>&gt;&gt;</a>
         </div>
     );

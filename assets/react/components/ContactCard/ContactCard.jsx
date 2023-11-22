@@ -8,16 +8,19 @@ const ContactCard = ({ contact }) => {
 
     return (
         <div className="contact-card">
-            <ContactCardField label={t('ContactCard.field.firstName')}
-                              value={contact.firstname} />
-            <ContactCardField label={t('ContactCard.field.lastName')}
-                              value={contact.lastname} />
-            <ContactCardField label={t('ContactCard.field.email')}
-                              value={contact.email} />
-            <ContactCardField label={t('ContactCard.field.phone')}
-                              value={contact.phone} />
-            {contact.image_name && <img id={contact.image_name} alt="contact image" className="image" />}
-            {/*TODO: improve image display*/}
+            <div className="contact-card__fields">
+                <ContactCardField label={t('ContactCard.field.firstName')}
+                                  value={contact.firstname} />
+                <ContactCardField label={t('ContactCard.field.lastName')}
+                                  value={contact.lastname} />
+                <ContactCardField label={t('ContactCard.field.email')}
+                                  value={contact.email} />
+                <ContactCardField label={t('ContactCard.field.phone')}
+                                  value={contact.phone} />
+            </div>
+
+            {contact.image_name && <ContactCardImage image_name={contact.image_name} />}
+
             <div className="button-actions">
                 <Button type="info"
                         link={`/contacts/${contact.id}`}
@@ -32,6 +35,14 @@ const ContactCardField = ({label, value}) => {
         <div className="contact-card__field">
             <span className="property">{label}</span>
             <span className="value">{value}</span>
+        </div>
+    );
+}
+
+const ContactCardImage = ({image_name}) => {
+    return (
+        <div className="contact-card__image">
+            <img id={image_name} alt="contact image" className="image" />
         </div>
     );
 }

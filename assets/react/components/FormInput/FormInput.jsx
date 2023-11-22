@@ -18,9 +18,7 @@ const FormInput = ({label, type, name, value, onChange, error}) => {
                     id={name}
                     name={name}
                     onChange={onChange}
-                    {...(type !== "file" && {value: value})}
-                    {...(type === "file" && {accept: "image/*"})}
-
+                    value={value}
                 />
                 {error && <div className="error">
                     {t(`ContactDetail.error.${error}`)}

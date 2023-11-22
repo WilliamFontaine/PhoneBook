@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import "./ContactsList.scss";
 import ContactsController from "../../../../controllers/contacts.controller";
 import ImagesController from "../../../../controllers/images.controller";
+import ImageService from "../../../../services/image.service";
 
 const ContactsList = () => {
     const { t } = useTranslation();
@@ -37,15 +38,10 @@ const ContactsList = () => {
             setTotalPages(Math.ceil(response.data.length / contactsPerPage));
 
             response.data.forEach(contact => {
-              // TODO: do a generic method
                 if (contact.image_name) {
                     ImagesController.getImageByName(contact.image_name)
                         .then(res => {
-                            const blob = new Blob([res.data]);
-                            const url = URL.createObjectURL(blob);
-                            const img = document.getElementById(contact.image_name)
-                            img.src = url;
-                            img.onload = e => URL.revokeObjectURL(url);
+                            ImageService.handleFile(res.data, contact.image_name)
                     })
                 }
             })

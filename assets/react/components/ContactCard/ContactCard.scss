@@ -1,46 +1,68 @@
 @import "../../App";
+
 .contact-card {
+  display: flex;
+  flex-direction: column;
   background-color: var(--card-background-color);
   color: var(--text-color);
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 16px;
   box-shadow: var(--card-box-shadow);
   width: 300px;
+  margin: 10px;
 
-  .contact-card__field {
+  .contact-card__fields {
+    flex-grow: 1;
     display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin-bottom: 8px;
+    flex-direction: column;
+    justify-content: space-around;
 
-    .property {
-      display: inline-block;
-      width: 125px;
-      font-weight: bold;
-      text-align: right;
-      margin-right: 8px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
 
-    .value {
-      display: inline-block;
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .contact-card__field {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      margin-bottom: 8px;
+
+
+      .property {
+        display: inline-block;
+        width: 125px;
+        font-weight: bold;
+        text-align: right;
+        margin-right: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .value {
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 
-  .image {
-    width: 80%;
+
+  .contact-card__image {
+    width: 100%;
+    margin: 16px 0;
+    display: flex;
+    justify-content: center;
+
+    img {
+      max-width: 100%;
+      max-height: 150px;
+      border-radius: 25px;
+    }
   }
 
   .button-actions {
     display: flex;
     justify-content: center;
-    margin-top: 16px;
+    margin-top: auto;
   }
 }

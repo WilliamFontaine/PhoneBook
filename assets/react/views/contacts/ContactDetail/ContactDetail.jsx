@@ -7,9 +7,11 @@ import FormButton from "../../../components/Button/FormButton";
 import FormInput from "../../../components/FormInput/FormInput";
 import Button from "../../../components/Button/Button";
 import ContactsController from "../../../../controllers/contacts.controller";
+import ImagesController from "../../../../controllers/images.controller";
 
 const ContactDetail = ({id}) => {
     const [contact, setContact] = useState({});
+    const [profilePicture, setProfilePicture] = useState(null);
     const [errors, setErrors] = useState([]);
     const [action, setAction] = useState(null);
     const {t} = useTranslation();
@@ -30,34 +32,34 @@ const ContactDetail = ({id}) => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (action === "POST") {
-            ContactsController.createContact(contact).then(response => {
+        let contactId = contact.id;
+
+        try {
+            if (action === "POST") {
+                const response = await ContactsController.createContact(contact);
                 setContact(response.data);
+                contactId = response.data.id;
                 setAction("PUT");
                 setErrors([]);
                 toast.success(t('ContactDetail.toast.success'));
-            }).catch(
-                error => {
-                    toast.error(t('ContactDetail.toast.error'));
-                    handleErrors(error.response.data);
-                }
-            );
-        } else {
-            ContactsController.updateContact(contact.id, contact).then(response => {
+            } else {
+                await ContactsController.updateContact(contact.id, contact);
+                toast.success(t('ContactDetail.toast.success'));
+            }
+
+            if (profilePicture !== null) {
+                await ImagesController.postProfilePicture(contactId, profilePicture);
+                const response = await ContactsController.getContactById(contactId);
                 setContact(response.data);
-                toast.success(t('ContactDetail.toast.updated'));
-                setErrors([])
-            }).catch(
-                error => {
-                    toast.error(t('ContactDetail.toast.error'));
-                    handleErrors(error.response.data);
-                }
-            );
+            }
+        } catch (error) {
+            toast.error(t('ContactDetail.toast.error'));
+            handleErrors(error.response.data);
         }
-    };
+    }
 
     const handleErrors = (errors) => {
         setErrors([])
@@ -89,13 +91,9 @@ const ContactDetail = ({id}) => {
         }));
     };
 
-    // TODO: gérer l'image dans un autre appel API / faire uniquement POST pour l'image
     const handleProfilePictureChange = (event) => {
         const {name, files} = event.target;
-        setContact(prevContact => ({
-            ...prevContact,
-            [name]: files[0]
-        }));
+        setProfilePicture(files[0]);
     }
 
     return (
@@ -127,12 +125,15 @@ const ContactDetail = ({id}) => {
                                value={contact.phone || ""}
                                onChange={handleInputChange}
                                error={errors.phone}/>
-                    <FormInput label={t('ContactDetail.field.profilePicture')}
-                               type="file"
-                               name="profilePicture"
-                               value={contact.profilePicture}
-                               onChange={handleProfilePictureChange}
-                               error={errors.profilePicture}/>
+
+                    {/*TODO: Faire un composant pour l'image*/}
+                    {/*TODO: gérer l'affichage de l'input + image*/}
+                    {/*TODO: gérer le fichier sélectionné quand on recoit un nom de fichier via l'API
+                    */}
+                    <input type="file"
+                           name="profilePicture"
+                           accept="image/*"
+                           onChange={handleProfilePictureChange}/>
 
 
                     {/* TODO: ajouter des champ aditionnel à la vollée */}

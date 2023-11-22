@@ -57,13 +57,12 @@ class ContactsController extends AbstractController
         Request                $request,
         SerializerInterface    $serializer,
         ValidatorInterface     $validator,
-        EntityManagerInterface $em,
-        FileUploader           $fileUploader
+        EntityManagerInterface $em
     ): JsonResponse
     {
-        $data = $request->request->all();
+        $data = $request->getContent();
 
-        $contact = $serializer->deserialize(json_encode($data), Contacts::class, 'json');
+        $contact = $serializer->deserialize($data, Contacts::class, 'json');
 
         $contact->setCreatedAt(new DateTimeImmutable());
         $contact->setUpdatedAt(new DateTimeImmutable());
@@ -72,15 +71,6 @@ class ContactsController extends AbstractController
 
         if ($violations->count() > 0) {
             return new JsonResponse($serializer->serialize($violations, 'json'), Response::HTTP_BAD_REQUEST, [], true);
-        }
-
-        $file = $request->files->get('profilePicture');
-
-        if ($file instanceof UploadedFile) {
-            $newFile = $fileUploader->upload($file);
-            $contact->setImageFile($newFile);
-
-            $contact->setImageName($newFile->getFilename());
         }
 
         $em->persist($contact);
@@ -111,31 +101,19 @@ class ContactsController extends AbstractController
                 return new JsonResponse(null, Response::HTTP_NOT_FOUND);
             }
 
-            // TODO: handle file
+            $data = $request->getContent();
 
-            $data = $request->request->all();
-
-            $updatedContact = $serializer->deserialize(json_encode($data), Contacts::class, 'json');
+            $updatedContact = $serializer->deserialize($data, Contacts::class, 'json');
 
             $contact->setFirstname($updatedContact->getFirstname());
             $contact->setLastname($updatedContact->getLastname());
             $contact->setUpdatedAt(new DateTimeImmutable());
-            $contact->setCreatedAt($contact->getCreatedAt());
 
             $existingPhoneContact = $em->getRepository(Contacts::class)->findOneBy(['phone' => $updatedContact->getPhone()]);
             if ($existingPhoneContact && $existingPhoneContact !== $contact) {
                 return new JsonResponse([['property_path' => 'phone', 'message' => 'unique']], Response::HTTP_BAD_REQUEST);
             }
-
-            $existingEmailContact = $em->getRepository(Contacts::class)->findOneBy(['email' => $updatedContact->getEmail()]);
-            if ($existingEmailContact && $existingEmailContact !== $contact) {
-                return new JsonResponse([['property_path' => 'email', 'message' => 'unique']], Response::HTTP_BAD_REQUEST);
-            }
-
-            // TODO: handle delete file
-
             $contact->setPhone($updatedContact->getPhone());
-            $contact->setEmail($updatedContact->getEmail());
 
             $violations = $validator->validate($contact);
 
@@ -155,7 +133,12 @@ class ContactsController extends AbstractController
      * @throws InvalidUuidException
      */
     #[Route('/{id}', name: 'app_api_contacts_delete', methods: ['DELETE'])]
-    public function delete(ContactRepository $contactRepository, EntityManagerInterface $em, string $id): JsonResponse
+    public function delete(
+        ContactRepository      $contactRepository,
+        EntityManagerInterface $em,
+        FileUploader           $fileUploader,
+        string                 $id
+    ): JsonResponse
     {
         try {
             $uuid = Uuid::fromString($id);
@@ -166,7 +149,9 @@ class ContactsController extends AbstractController
                 return new JsonResponse(null, Response::HTTP_NOT_FOUND);
             }
 
-//            TODO: handle delte file
+            if ($contact->getImageName() !== null) {
+                $fileUploader->remove($contact->getImageName());
+            }
 
             $em->remove($contact);
             $em->flush();
