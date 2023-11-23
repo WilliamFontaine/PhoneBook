@@ -1,4 +1,4 @@
-import { registerReactControllerComponents } from '@symfony/ux-react';
+import {registerReactControllerComponents} from '@symfony/ux-react';
 import './bootstrap.js';
 
 import "./i18n";

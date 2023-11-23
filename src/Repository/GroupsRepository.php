@@ -16,10 +16,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GroupsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Groups::class);
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Groups::class);
+  }
 
 //    /**
 //     * @return Groups[] Returns an array of Groups objects

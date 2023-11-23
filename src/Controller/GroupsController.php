@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/groups')]
 class GroupsController extends AbstractController
 {
-    #[Route('', name: 'app_groups')]
-    public function index(): Response
-    {
-        return $this->render('groups/index.html.twig');
-    }
+  #[Route('', name: 'app_groups')]
+  public function index(): Response
+  {
+    return $this->render('groups/index.html.twig');
+  }
 }

@@ -46,6 +46,7 @@
   "ContactsList": {
     "button": {
       "new": "Nouveau contact"
-    }
+    },
+    "noContacts": "Aucun contact"
   }
 }
