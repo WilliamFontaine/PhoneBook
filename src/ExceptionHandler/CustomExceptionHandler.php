@@ -14,10 +14,10 @@ class CustomExceptionHandler
     $exception = $event->getThrowable();
 
     if ($exception instanceof InvalidUuidException) {
-      $response = new JsonResponse(['error' => 'Invalid UUID'], 400);
+      $response = new JsonResponse([['property_path' => 'uuid', 'message' => 'invalid_uuid']], 400);
       $event->setResponse($response);
     } else if ($exception instanceof InvalidFileException) {
-      $response = new JsonResponse(['error' => 'Invalid file'], 400);
+      $response = new JsonResponse([['property_path' => 'file', 'message' => 'invalid_file']], 400);
       $event->setResponse($response);
     }
   }

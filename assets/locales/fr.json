@@ -22,7 +22,8 @@
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "Email",
-      "phone": "Téléphone"
+      "phone": "Téléphone",
+      "profilePicture": "Photo de profil"
     },
     "button": {
       "submit": "Enregistrer",
@@ -40,7 +41,9 @@
       "not_null": "Ce champ ne peut pas être vide.",
       "not_blank": "Ce champ ne peut pas être vide.",
       "phone_format": "Le format du numéro de téléphone est invalide.",
-      "email_format": "Le format de l'email est invalide."
+      "email_format": "Le format de l'email est invalide.",
+      "invalid_uuid": "L'identifiant est invalide.",
+      "unvalide_file": "L'image est invalide."
     }
   },
   "ContactsList": {
