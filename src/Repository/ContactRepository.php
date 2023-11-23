@@ -16,10 +16,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ContactRepository extends ServiceEntityRepository
 {
-  public function __construct(ManagerRegistry $registry)
-  {
-    parent::__construct($registry, Contacts::class);
-  }
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Contacts::class);
+    }
 
 //    /**
 //     * @return Contacts[] Returns an array of Contacts objects

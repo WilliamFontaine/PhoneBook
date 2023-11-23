@@ -34,7 +34,8 @@
       "success": "Contact successfully created",
       "updated": "Contact successfully updated",
       "error": "An error occurred while saving the contact",
-      "deleted": "Contact successfully deleted"
+      "deleted": "Contact successfully deleted",
+      "imageDeleted": "Image successfully deleted"
     },
     "error": {
       "unique": "This field must be unique.",
@@ -51,5 +52,8 @@
       "new": "New Contact"
     },
     "noContacts": "No contacts found"
+  },
+  "FormInput": {
+    "imagePreview": "Image preview :"
   }
 }

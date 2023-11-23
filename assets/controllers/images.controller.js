@@ -16,6 +16,10 @@ class ImagesController {
     return await api.get(`${ImagesController.CONTACT_API_URL}/${name}`, {responseType: 'arraybuffer'})
   }
 
+  async deleteImageByContactId(contactId) {
+    return await api.delete(`${ImagesController.CONTACT_API_URL}/${contactId}`);
+  }
+
 }
 
 export default new ImagesController();

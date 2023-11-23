@@ -34,7 +34,8 @@
       "success": "Contact enregistré avec succès",
       "updated": "Contact mis à jour avec succès",
       "error": "Une erreur est survenue",
-      "deleted": "Contact supprimé avec succès"
+      "deleted": "Contact supprimé avec succès",
+      "imageDeleted": "Photo de profil supprimée avec succès"
     },
     "error": {
       "unique": "Ce champ doit être unique.",
@@ -51,5 +52,8 @@
       "new": "Nouveau contact"
     },
     "noContacts": "Aucun contact"
+  },
+  "FormInput": {
+    "imagePreview": "Aperçu de l'image :"
   }
 }

@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RedirectController extends AbstractController
 {
-  #[Route("/{wildcard}", name: "app_redirect", requirements: ["wildcard" => ".*"])]
-  public function redirectAction(): Response
-  {
-    return $this->redirectToRoute('app_contacts_index');
-  }
+    #[Route("/{wildcard}", name: "app_redirect", requirements: ["wildcard" => ".*"])]
+    public function redirectAction(): Response
+    {
+        return $this->redirectToRoute('app_contacts_index');
+    }
 }

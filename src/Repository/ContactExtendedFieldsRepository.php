@@ -16,10 +16,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ContactExtendedFieldsRepository extends ServiceEntityRepository
 {
-  public function __construct(ManagerRegistry $registry)
-  {
-    parent::__construct($registry, ContactExtendedFields::class);
-  }
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, ContactExtendedFields::class);
+    }
 
 //    /**
 //     * @return ContactExtendedFields[] Returns an array of ContactExtendedFields objects
