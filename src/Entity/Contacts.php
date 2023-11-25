@@ -51,8 +51,8 @@ class Contacts
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
 
-    #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts')]
-    private Collection $Groups;
+    #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts', fetch: 'EAGER')]
+    private Collection $groups;
 
     #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $contactExtendedFields;
@@ -67,7 +67,7 @@ class Contacts
 
     public function __construct()
     {
-        $this->Groups = new ArrayCollection();
+        $this->groups = new ArrayCollection();
         $this->contactExtendedFields = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
@@ -166,21 +166,21 @@ class Contacts
      */
     public function getGroups(): Collection
     {
-        return $this->Groups;
+        return $this->groups;
     }
 
-    public function addGroups(Groups $Groups): static
+    public function addGroups(Groups $groups): static
     {
-        if (!$this->Groups->contains($Groups)) {
-            $this->Groups->add($Groups);
+        if (!$this->groups->contains($groups)) {
+            $this->groups->add($groups);
         }
 
         return $this;
     }
 
-    public function removeGroups(Groups $Groups): static
+    public function removeGroups(Groups $groups): static
     {
-        $this->Groups->removeElement($Groups);
+        $this->groups->removeElement($groups);
 
         return $this;
     }

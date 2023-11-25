@@ -23,7 +23,10 @@
       "lastName": "Last name",
       "email": "Email",
       "phone": "Phone",
-      "profilePicture": "Profile picture"
+      "profilePicture": "Profile picture",
+      "groups": "Groups",
+      "groupsPlaceholder": "Create a group by entering its name",
+      "groupsSelectPlaceholder": "Select an existing group"
     },
     "button": {
       "submit": "Save",
@@ -54,6 +57,10 @@
     "noContacts": "No contacts found"
   },
   "FormInput": {
-    "imagePreview": "Image preview :"
+    "imagePreview": "Image preview :",
+    "selectedGroups": {
+      "singular": "Selected group :",
+        "plural": "Selected groups :"
+    }
   }
 }

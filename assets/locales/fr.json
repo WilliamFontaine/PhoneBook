@@ -23,7 +23,10 @@
       "lastName": "Nom",
       "email": "Email",
       "phone": "Téléphone",
-      "profilePicture": "Photo de profil"
+      "profilePicture": "Photo de profil",
+      "groups": "Groupes",
+      "groupsPlaceholder": "Créer un groupe en saisissant son nom",
+      "groupsSelectPlaceholder": "Sélectionner un groupe existant"
     },
     "button": {
       "submit": "Enregistrer",
@@ -54,6 +57,10 @@
     "noContacts": "Aucun contact"
   },
   "FormInput": {
-    "imagePreview": "Aperçu de l'image :"
+    "imagePreview": "Aperçu de l'image :",
+    "selectedGroups": {
+      "singular": "Groupe sélectionné :",
+        "plural": "Groupes sélectionnés :"
+    }
   }
 }

@@ -15,7 +15,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{js,html,ts,tsx}]
+[*.{js,html,ts,tsx,jsx,scss}]
 indent_size = 2
 
 [*.json]
@@ -47,7 +47,7 @@ indent_size = 4
 [composer.json]
 indent_size = 4
 
-[{,docker-}compose{,.*}.{yaml, yml}]
+[{,docker-}compose{,.*}.{yaml,  yml}]
 indent_style = space
 indent_size = 2
 
