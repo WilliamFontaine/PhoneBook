@@ -22,6 +22,8 @@ const ContactCard = ({contact, imageUrl}) => {
 
             {imageUrl && <ContactCardImage imageUrl={imageUrl}/>}
 
+            {/* TODO: Mettre à jour les cartes avec toutes les infos*/}
+
             <div className="button-actions">
                 <Button type="info"
                         link={`/contacts/${contact.id}`}
