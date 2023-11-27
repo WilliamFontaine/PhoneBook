@@ -6,7 +6,7 @@
       "groups": "Liste des groupes de contacts"
     }
   },
-  "ContactCard": {
+  "Card": {
     "field": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -51,6 +51,7 @@
     }
   },
   "ContactsList": {
+    "title": "Liste des contacts",
     "button": {
       "new": "Nouveau contact"
     },
@@ -62,5 +63,12 @@
       "singular": "Groupe sélectionné :",
         "plural": "Groupes sélectionnés :"
     }
+  },
+  "GroupsList": {
+    "title": "Liste des groupes de contacts",
+    "button": {
+      "new": "Nouveau groupe"
+    },
+    "noGroups": "Aucun groupe"
   }
 }

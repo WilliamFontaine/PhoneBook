@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import ContactCard from "../../../components/ContactCard/ContactCard";
+import ContactCard from "../../../components/Card/ContactCard";
 import {useTranslation} from "react-i18next";
 import Button from "../../../components/Button/Button";
 import Paginator from "../../../components/Paginator/Paginator";
@@ -63,7 +63,7 @@ const ContactsList = () => {
     return (
         <div className="contacts-list">
             <div className="contacts-list__header">
-                <h1>Liste des contacts</h1>
+                <h1>{t('ContactsList.title')}</h1>
                 <div className="buttons-container">
                     <Button type="primary"
                             link="/contacts/new"
