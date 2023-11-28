@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/groups')]
 class GroupsController extends AbstractController
@@ -46,25 +47,42 @@ class GroupsController extends AbstractController
         return new JsonResponse($serializer->serialize($group, 'json'), Response::HTTP_OK, [], true);
     }
 
-    #[Route('', name: 'api_groups_update', methods: ['PUT'])]
+    #[Route('/{id}', name: 'api_groups_update', methods: ['PUT'])]
     public function update(
-        GroupsRepository    $groupsRepository,
-        SerializerInterface $serializer,
-        string              $id
+        Request                $request,
+        GroupsRepository       $groupsRepository,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator,
+        EntityManagerInterface $em,
+        string                 $id
     ): JsonResponse
     {
+        $data = $request->getContent();
+
+        $updateGroup = $serializer->deserialize($data, Groups::class, 'json');
+
         $group = $groupsRepository->find($id);
 
-        if (!$group) {
-            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        $existingNameGroup = $groupsRepository->findOneBy(['name' => $updateGroup->getName()]);
+        if ($existingNameGroup && $existingNameGroup !== $group) {
+            return new JsonResponse([['property_path' => 'name', 'message' => 'unique']], Response::HTTP_BAD_REQUEST);
         }
+
+        $group->setName($updateGroup->getName());
+
+
+        $violations = $validator->validate($group);
+
+        if ($violations->count() > 0) {
+            return new JsonResponse($serializer->serialize($violations, 'json'), Response::HTTP_BAD_REQUEST, [], true);
+        }
+
+        $em->persist($group);
+        $em->flush();
 
         return new JsonResponse($serializer->serialize($group, 'json'), Response::HTTP_OK, [], true);
     }
 
-    /**
-     * @throws InvalidUuidException
-     */
     #[Route('/add/{contactId}', name: 'api_groups_add_contact', methods: ['PUT'])]
     public function addContact(
         Request                $request,

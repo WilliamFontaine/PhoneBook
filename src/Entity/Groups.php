@@ -6,6 +6,7 @@ use App\Repository\GroupsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
@@ -27,6 +28,7 @@ class Groups
     private ?string $description = null;
 
     #[ORM\ManyToMany(targetEntity: Contacts::class, mappedBy: 'groups')]
+    #[Exclude]
     private Collection $contacts;
 
     public function __construct()

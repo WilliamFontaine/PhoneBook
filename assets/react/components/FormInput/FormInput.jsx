@@ -18,6 +18,7 @@ const FormInput = ({label, type, name, value, onChange, error}) => {
                     name={name}
                     onChange={onChange}
                     value={value}
+                    maxLength={255}
                 />
                 {error && <div className="error">
                     {t(`ContactDetail.error.${error}`)}

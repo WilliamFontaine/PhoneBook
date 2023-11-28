@@ -166,9 +166,9 @@ const ContactDetail = ({id}) => {
 
     return (
         <div className="contact-detail">
-            <h1>Contact Detail</h1>
+            <h1>{t('ContactDetail.title')}</h1>
             {contact && (
-                <form onSubmit={handleSubmit} encType={"multipart/form-data"}>
+                <form onSubmit={handleSubmit}>
                     <FormInput label={t('ContactDetail.field.firstName')}
                                type="text"
                                name="firstname"

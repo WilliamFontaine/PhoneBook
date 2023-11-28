@@ -8,16 +8,23 @@
   },
   "Card": {
     "field": {
-      "firstName": "Prénom",
-      "lastName": "Nom",
-      "email": "Email",
-      "phone": "Téléphone"
+      "contact": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "phone": "Téléphone"
+      },
+      "group": {
+        "name": "Nom",
+        "description": "Description"
+      }
     },
     "button": {
       "edit": "Modifier"
     }
   },
   "ContactDetail": {
+    "title": "Détail du contact",
     "field": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -61,7 +68,18 @@
     "imagePreview": "Aperçu de l'image :",
     "selectedGroups": {
       "singular": "Groupe sélectionné :",
-        "plural": "Groupes sélectionnés :"
+      "plural": "Groupes sélectionnés :"
+    }
+  },
+  "GroupDetail": {
+    "title": "Détail du groupe de contacts",
+    "field": {
+      "name": "Nom",
+      "description": "Description"
+    },
+    "button": {
+      "submit": "Enregistrer",
+      "return": "Retour"
     }
   },
   "GroupsList": {

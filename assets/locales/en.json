@@ -8,16 +8,23 @@
   },
   "Card": {
     "field": {
-      "firstName": "First name",
-      "lastName": "Last name",
-      "email": "Email",
-      "phone": "Phone"
+      "contact": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone"
+      },
+      "group": {
+        "name": "Name",
+        "description": "Description"
+      }
     },
     "button": {
       "edit": "Edit"
     }
   },
   "ContactDetail": {
+    "title": "Contact Details",
     "field": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -62,6 +69,17 @@
     "selectedGroups": {
       "singular": "Selected group :",
         "plural": "Selected groups :"
+    }
+  },
+  "GroupDetail": {
+    "title": "Contact Group Details",
+    "field": {
+      "name": "Name",
+      "description": "Description"
+    },
+    "button": {
+      "submit": "Save",
+      "return": "Return"
     }
   },
   "GroupsList": {

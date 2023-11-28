@@ -25,10 +25,21 @@
       flex-direction: row;
       margin-bottom: 8px;
 
+      .text-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
 
       .property {
         display: inline-block;
-        width: 125px;
+        width: 150px;
         font-weight: bold;
         text-align: right;
         margin-right: 8px;
@@ -43,6 +54,16 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        &.text-area {
+          display: flex;
+          height: 200px;
+          word-wrap: break-word;
+          overflow: unset;
+          white-space: unset;
+          text-overflow: unset;
+          text-align: justify;
+        }
       }
     }
   }
