@@ -162,6 +162,11 @@ class ContactsController extends AbstractController
                 $this->fileUploader->remove($contact->getImageName());
             }
 
+            $extendedFields = $contact->getContactExtendedFields();
+            foreach ($extendedFields as $field) {
+                $this->em->remove($field);
+            }
+
             $this->em->remove($contact);
             $this->em->flush();
 

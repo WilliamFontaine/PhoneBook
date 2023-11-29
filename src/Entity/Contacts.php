@@ -52,7 +52,7 @@ class Contacts
     #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts', fetch: 'EAGER', orphanRemoval: true)]
     private Collection $groups;
 
-    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist'], fetch: 'EAGER', orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist'], fetch: 'EAGER')]
     private ?Collection $contactExtendedFields;
 
     #[ORM\Column(type: 'datetime_immutable')]
