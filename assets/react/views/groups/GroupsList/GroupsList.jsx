@@ -43,7 +43,7 @@ const GroupsList = () => {
                 <h1>{t('GroupsList.title')}</h1>
                 <div className="buttons-container">
                     <Button type="primary"
-                            link="/contacts/new"
+                            link="/groups/new"
                             content={t('GroupsList.button.new')}/>
                 </div>
 

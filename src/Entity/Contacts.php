@@ -51,11 +51,11 @@ class Contacts
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
 
-    #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts', fetch: 'EAGER')]
+    #[ORM\ManyToMany(targetEntity: Groups::class, inversedBy: 'contacts', fetch: 'EAGER', orphanRemoval: true)]
     private Collection $groups;
 
-    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $contactExtendedFields;
+    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: ContactExtendedFields::class, cascade: ['persist'], fetch: 'EAGER', orphanRemoval: true)]
+    private ?Collection $contactExtendedFields;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull]
@@ -196,10 +196,10 @@ class Contacts
     public function addContactExtendedField(ContactExtendedFields $contactExtendedField): static
     {
         if (!$this->contactExtendedFields->contains($contactExtendedField)) {
+
             $this->contactExtendedFields->add($contactExtendedField);
             $contactExtendedField->setContact($this);
         }
-
         return $this;
     }
 

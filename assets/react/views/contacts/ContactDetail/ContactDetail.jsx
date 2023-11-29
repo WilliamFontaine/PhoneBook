@@ -12,6 +12,7 @@ import FormInputImage from "../../../components/FormInput/FormInputImage";
 import ImageService from "../../../../services/image.service";
 import GroupsController from "../../../../controllers/groups.controller";
 import FormInputGroups from "../../../components/FormInput/FormInputGroups";
+import FormAdditionalInput from "../../../components/FormInput/FormAdditionalInput";
 
 const ContactDetail = ({id}) => {
     const [contact, setContact] = useState({});
@@ -216,7 +217,6 @@ const ContactDetail = ({id}) => {
                                     imageUrl={contactImagesUrl.imageUrl}
                                     deleteImage={handleDeleteProfilePicture}/>
 
-                    {/* TODO: ajouter des champ aditionnel à la vollée */}
 
                     <div className="buttons-container">
                         <div className="button-field">

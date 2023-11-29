@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContactExtendedFieldsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 
 #[ORM\Entity(repositoryClass: ContactExtendedFieldsRepository::class)]
 class ContactExtendedFields
@@ -21,6 +22,7 @@ class ContactExtendedFields
 
     #[ORM\ManyToOne(inversedBy: 'contactExtendedFields')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Exclude]
     private ?Contacts $contact = null;
 
     public function getId(): ?int
