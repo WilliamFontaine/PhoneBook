@@ -13,13 +13,13 @@ const ContactCard = ({contact, imageUrl}) => {
         <div className="contact-card">
             <div className="contact-card__fields">
                 <CardField label={t('Card.field.contact.firstName')}
-                                  value={contact.firstname}/>
+                           value={contact.firstname}/>
                 <CardField label={t('Card.field.contact.lastName')}
-                                  value={contact.lastname}/>
+                           value={contact.lastname}/>
                 <CardField label={t('Card.field.contact.email')}
-                                  value={contact.email}/>
+                           value={contact.email}/>
                 <CardField label={t('Card.field.contact.phone')}
-                                  value={contact.phone}/>
+                           value={contact.phone}/>
             </div>
 
             {imageUrl && <CardImage imageUrl={imageUrl}/>}

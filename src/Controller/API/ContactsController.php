@@ -8,7 +8,6 @@ use App\Exception\InvalidUuidException;
 use App\Repository\ContactRepository;
 use App\Service\FileUploader;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use JMS\Serializer\SerializerInterface;
@@ -88,6 +87,28 @@ class ContactsController extends AbstractController
 
 
         return new JsonResponse($this->serializer->serialize($contact, 'json'), Response::HTTP_CREATED, [], true);
+    }
+
+    private function manageExtendedFields($contact): Contacts
+    {
+        $extendedFields = $contact->getContactExtendedFields();
+        $extendedFieldsNames = [];
+
+        foreach ($extendedFields as $field) {
+            $field->setContact($contact);
+            $extendedFieldsNames[] = $field->getFieldName();
+        }
+
+        $contactExtendedFields = $this->em->getRepository(ContactExtendedFields::class)->findBy(['contact' => $contact]);
+        foreach ($contactExtendedFields as $contactExtendedField) {
+
+            if (!in_array($contactExtendedField->getFieldName(), $extendedFieldsNames)) {
+                $this->em->remove($contactExtendedField);
+            }
+        }
+        $this->em->flush();
+
+        return $contact;
     }
 
     /**
@@ -174,27 +195,5 @@ class ContactsController extends AbstractController
         } catch (InvalidArgumentException $ignored) {
             throw new InvalidUuidException();
         }
-    }
-
-    private function manageExtendedFields($contact): Contacts
-    {
-        $extendedFields = $contact->getContactExtendedFields();
-        $extendedFieldsNames = [];
-
-        foreach ($extendedFields as $field) {
-            $field->setContact($contact);
-            $extendedFieldsNames[] = $field->getFieldName();
-        }
-
-        $contactExtendedFields = $this->em->getRepository(ContactExtendedFields::class)->findBy(['contact' => $contact]);
-        foreach ($contactExtendedFields as $contactExtendedField) {
-
-            if (!in_array($contactExtendedField->getFieldName(), $extendedFieldsNames)) {
-                $this->em->remove($contactExtendedField);
-            }
-        }
-        $this->em->flush();
-
-        return $contact;
     }
 }

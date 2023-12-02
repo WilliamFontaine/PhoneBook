@@ -43,20 +43,20 @@ const FormInputGroups = ({
                 </div>
             </div>
             {selectedGroups.length > 0 &&
-            <div className="selected-groups">
-                <p>{t(`FormInput.selectedGroups.${selectedGroups.length === 1 ? 'singular' : 'plural'}`)}</p>
+                <div className="selected-groups">
+                    <p>{t(`FormInput.selectedGroups.${selectedGroups.length === 1 ? 'singular' : 'plural'}`)}</p>
 
-                <div className="selected-groups__groups">
-                    {selectedGroups.map((group, index) => (
-                        <div className="selected-group" key={index}>
-                            <p>{group}</p>
-                            <div className="delete-icon">
-                                <IoIosCloseCircleOutline className="icon" onClick={() => deleteGroup(group)}/>
+                    <div className="selected-groups__groups">
+                        {selectedGroups.map((group, index) => (
+                            <div className="selected-group" key={index}>
+                                <p>{group}</p>
+                                <div className="delete-icon">
+                                    <IoIosCloseCircleOutline className="icon" onClick={() => deleteGroup(group)}/>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
             }
         </div>
     );

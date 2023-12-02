@@ -90,11 +90,11 @@
       "error": "An error occurred while saving the contact group."
     }
   },
-"GroupsList": {
-"title": "List of Contact Groups",
-"button": {
-"new": "New Group"
-},
-"noGroups": "No groups found"
-}
+  "GroupsList": {
+    "title": "List of Contact Groups",
+    "button": {
+      "new": "New Group"
+    },
+    "noGroups": "No groups found"
+  }
 }
