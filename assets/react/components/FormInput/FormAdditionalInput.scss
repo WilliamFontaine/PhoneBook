@@ -1,0 +1,42 @@
+@import "../../App";
+
+.additional-input-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+  height: 5rem;
+  color: var(--text-color);
+
+  input {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-background-color);
+    color: var(--input-text-color);
+  }
+
+  .input-name {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 25%;
+    margin-right: 2rem;
+
+    input {
+      width: 80%;
+    }
+  }
+
+  .input-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+
+    input {
+      width: 80%;
+    }
+  }
+}

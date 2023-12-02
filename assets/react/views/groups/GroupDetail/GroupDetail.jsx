@@ -6,6 +6,7 @@ import GroupsController from "../../../../controllers/groups.controller";
 import FormInput from "../../../components/FormInput/FormInput";
 import Button from "../../../components/Button/Button";
 import FormButton from "../../../components/Button/FormButton";
+import toast from "react-hot-toast";
 
 const GroupDetail = ({id}) => {
     const [group, setGroup] = useState({});
@@ -31,6 +32,7 @@ const GroupDetail = ({id}) => {
             (response) => {
                 setErrors([]);
                 setGroup(response.data);
+                toast.success(t('GroupDetail.toast.updated'));
             },
             (error) => {
                 handleErrors(error.response.data);
@@ -45,6 +47,7 @@ const GroupDetail = ({id}) => {
                 [error["property_path"]]: error.message
             }));
         });
+        toast.error(t('GroupDetail.toast.error'));
     }
 
     const handleInputChange = (event) => {

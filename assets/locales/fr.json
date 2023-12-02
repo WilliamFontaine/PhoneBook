@@ -33,12 +33,16 @@
       "profilePicture": "Photo de profil",
       "groups": "Groupes",
       "groupsPlaceholder": "Créer un groupe en saisissant son nom",
-      "groupsSelectPlaceholder": "Sélectionner un groupe existant"
+      "groupsSelectPlaceholder": "Sélectionner un groupe existant",
+      "extendedName": "Intitulé du champ",
+      "extendedValue": "Valeur du champ"
     },
     "button": {
       "submit": "Enregistrer",
       "delete": "Supprimer",
-      "return": "Retour"
+      "return": "Retour",
+      "addExtendedFields": "Ajouter un champ",
+      "deleteExtendedFields": "Supprimer un champ"
     },
     "toast": {
       "success": "Contact enregistré avec succès",
@@ -80,6 +84,10 @@
     "button": {
       "submit": "Enregistrer",
       "return": "Retour"
+    },
+    "toast": {
+      "updated": "Groupe mis à jour avec succès.",
+      "error": "Une erreur est survenue."
     }
   },
   "GroupsList": {

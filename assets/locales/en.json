@@ -33,12 +33,16 @@
       "profilePicture": "Profile picture",
       "groups": "Groups",
       "groupsPlaceholder": "Create a group by entering its name",
-      "groupsSelectPlaceholder": "Select an existing group"
+      "groupsSelectPlaceholder": "Select an existing group",
+      "extendedName": "Field title",
+      "extendedValue": "Field value"
     },
     "button": {
       "submit": "Save",
       "delete": "Delete",
-      "return": "Return"
+      "return": "Return",
+      "addExtendedFields": "Add a field",
+      "deleteExtendedFields": "Delete a field"
     },
     "toast": {
       "success": "Contact successfully created",
@@ -68,7 +72,7 @@
     "imagePreview": "Image preview :",
     "selectedGroups": {
       "singular": "Selected group :",
-        "plural": "Selected groups :"
+      "plural": "Selected groups :"
     }
   },
   "GroupDetail": {
@@ -80,13 +84,17 @@
     "button": {
       "submit": "Save",
       "return": "Return"
+    },
+    "toast": {
+      "updated": "Contact group successfully updated.",
+      "error": "An error occurred while saving the contact group."
     }
   },
-  "GroupsList": {
-    "title": "List of Contact Groups",
-    "button": {
-      "new": "New Group"
-    },
-    "noGroups": "No groups found"
-  }
+"GroupsList": {
+"title": "List of Contact Groups",
+"button": {
+"new": "New Group"
+},
+"noGroups": "No groups found"
+}
 }
