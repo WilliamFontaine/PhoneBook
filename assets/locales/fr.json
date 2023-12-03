@@ -12,7 +12,8 @@
         "firstName": "Prénom",
         "lastName": "Nom",
         "email": "Email",
-        "phone": "Téléphone"
+        "phone": "Téléphone",
+        "groups": "Groupes"
       },
       "group": {
         "name": "Nom",
@@ -65,6 +66,16 @@
     "title": "Liste des contacts",
     "button": {
       "new": "Nouveau contact"
+    },
+    "filter": {
+      "title": "Filtrer les contacts",
+      "select": "Sélectionner un filtre",
+      "placeholder": "Filtrer...",
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "groups": "Groupes"
     },
     "noContacts": "Aucun contact"
   },

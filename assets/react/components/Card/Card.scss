@@ -10,7 +10,7 @@
   box-shadow: var(--card-box-shadow);
   width: 300px;
   margin: 10px;
-  height: 300px;
+  height: fit-content;
 
   .contact-card__fields, .group-card__fields {
     flex-grow: 1;

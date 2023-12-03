@@ -12,7 +12,8 @@
         "firstName": "First name",
         "lastName": "Last name",
         "email": "Email",
-        "phone": "Phone"
+        "phone": "Phone",
+        "groups": "Groups"
       },
       "group": {
         "name": "Name",
@@ -65,6 +66,16 @@
     "title": "List of Contacts",
     "button": {
       "new": "New Contact"
+    },
+    "filter": {
+      "title": "Filter contacts",
+      "select": "Select a filter",
+      "placeholder": "Filter...",
+      "firstname": "Firstname",
+      "lastname": "Lastname",
+      "email": "Email",
+      "phone": "Phone",
+      "groups": "Groups"
     },
     "noContacts": "No contacts found"
   },

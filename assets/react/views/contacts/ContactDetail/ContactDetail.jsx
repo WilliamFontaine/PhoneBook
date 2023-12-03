@@ -16,272 +16,272 @@ import FormAdditionalInput from "../../../components/FormInput/FormAdditionalInp
 import {IoMdAddCircleOutline, IoMdRemoveCircleOutline} from "react-icons/io";
 
 const ContactDetail = ({id}) => {
-    const [contact, setContact] = useState({"contact_extended_fields": []});
-    const [contactImagesUrl, setContactImageUrl] = useState({});
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [groups, setGroups] = useState([]);
-    const [selectedGroups, setSelectedGroups] = useState([]);
-    const [currentGroup, setCurrentGroup] = useState(null);
-    const [errors, setErrors] = useState([]);
-    const [action, setAction] = useState(null);
-    const [extendedFields, setExtendedFields] = useState([]);
-    const {t} = useTranslation();
+  const [contact, setContact] = useState({"contact_extended_fields": []});
+  const [contactImagesUrl, setContactImageUrl] = useState({});
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [groups, setGroups] = useState([]);
+  const [selectedGroups, setSelectedGroups] = useState([]);
+  const [currentGroup, setCurrentGroup] = useState(null);
+  const [errors, setErrors] = useState([]);
+  const [action, setAction] = useState(null);
+  const [extendedFields, setExtendedFields] = useState([]);
+  const {t} = useTranslation();
 
 
-    useEffect(() => {
-        if (id !== null) {
-            fetchContact();
-            setAction("PUT");
-        } else {
-            setAction("POST");
-        }
-        fetchGroups();
-    }, [location.search]);
-
-    const fetchContact = async () => {
-        let image_name = null;
-
-        await ContactsController.getContactById(id).then(response => {
-            setContact(response.data);
-            image_name = response.data.image_name;
-            setSelectedGroups(response.data.groups.map(group => group.name));
-            setExtendedFields(response.data.contact_extended_fields);
-        });
-        loadProfilePicture(image_name);
-    };
-
-    const fetchGroups = async () => {
-        await GroupsController.getAllGroups().then(response => {
-            setGroups(response.data);
-        });
+  useEffect(() => {
+    if (id !== null) {
+      fetchContact();
+      setAction("PUT");
+    } else {
+      setAction("POST");
     }
+    fetchGroups();
+  }, [location.search]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+  const fetchContact = async () => {
+    let image_name = null;
 
-        let contactId = contact.id;
-        let image_name = null;
+    await ContactsController.getContactById(id).then(response => {
+      setContact(response.data);
+      image_name = response.data.image_name;
+      setSelectedGroups(response.data.groups.map(group => group.name));
+      setExtendedFields(response.data.contact_extended_fields);
+    });
+    loadProfilePicture(image_name);
+  };
 
-        contact.contact_extended_fields = extendedFields;
+  const fetchGroups = async () => {
+    await GroupsController.getAllGroups().then(response => {
+      setGroups(response.data);
+    });
+  }
 
-        try {
-            let response;
-            if (action === "POST") {
-                response = await ContactsController.createContact(contact);
-                contactId = response.data.id;
-                setAction("PUT");
-                setErrors([]);
-                toast.success(t('ContactDetail.toast.success'));
-            } else {
-                response = await ContactsController.updateContact(contact.id, contact);
-                toast.success(t('ContactDetail.toast.success'));
-            }
-            setContact(response.data);
-            image_name = response.data.image_name;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-            if (profilePicture !== null) {
-                await ImagesController.postProfilePicture(contactId, profilePicture);
-                const response = await ContactsController.getContactById(contactId);
-                setContact(response.data);
-                setErrors([]);
-                image_name = response.data.image_name;
-            }
+    let contactId = contact.id;
+    let image_name = null;
 
-            if (selectedGroups.sort().join(',') !== response.data.groups.map(group => group.name).sort().join(',')) {
-                await GroupsController.addContactToGroups(contactId, selectedGroups);
-                const response = await ContactsController.getContactById(contactId);
-                setContact(response.data);
-                setErrors([]);
-            }
+    contact.contact_extended_fields = extendedFields;
 
-            loadProfilePicture(image_name);
-        } catch (error) {
-            handleErrors(error.response.data);
-        }
-    }
-
-    const handleErrors = (errors) => {
+    try {
+      let response;
+      if (action === "POST") {
+        response = await ContactsController.createContact(contact);
+        contactId = response.data.id;
+        setAction("PUT");
         setErrors([]);
-        errors
-            .filter(error => error["property_path"] !== "invalid_uuid" && error["property_path"] !== "invalid_uuid")
-            .forEach(error => {
-                setErrors(prevErrors => ({
-                    ...prevErrors,
-                    [error["property_path"]]: error.message
-                }));
-            });
+        toast.success(t('ContactDetail.toast.success'));
+      } else {
+        response = await ContactsController.updateContact(contact.id, contact);
+        toast.success(t('ContactDetail.toast.success'));
+      }
+      setContact(response.data);
+      image_name = response.data.image_name;
 
-        errors
-            .filter(error => error["property_path"] === "invalid_uuid" || error["property_path"] === "invalid_file")
-            .forEach(error => {
-                toast.error(t(`ContactDetail.toast.${error.message}`));
-            });
+      if (profilePicture !== null) {
+        await ImagesController.postProfilePicture(contactId, profilePicture);
+        const response = await ContactsController.getContactById(contactId);
+        setContact(response.data);
+        setErrors([]);
+        image_name = response.data.image_name;
+      }
+
+      if (selectedGroups.sort().join(',') !== response.data.groups.map(group => group.name).sort().join(',')) {
+        await GroupsController.addContactToGroups(contactId, selectedGroups);
+        const response = await ContactsController.getContactById(contactId);
+        setContact(response.data);
+        setErrors([]);
+      }
+
+      loadProfilePicture(image_name);
+    } catch (error) {
+      handleErrors(error.response.data);
     }
+  }
 
-    const handleDelete = (event) => {
-        event.preventDefault();
-        ContactsController.deleteContact(id).then(response => {
-            setContact(response.data);
-            localStorage.setItem("toast", JSON.stringify({
-                type: "success",
-                message: t('ContactDetail.toast.deleted')
-            }));
-            window.location.href = "/contacts";
-        });
-    }
-
-    const handleInputChange = (event) => {
-        const {name, value} = event.target;
-        setContact(prevContact => ({
-            ...prevContact,
-            [name]: value
+  const handleErrors = (errors) => {
+    setErrors([]);
+    errors
+      .filter(error => error["property_path"] !== "invalid_uuid" && error["property_path"] !== "invalid_uuid")
+      .forEach(error => {
+        setErrors(prevErrors => ({
+          ...prevErrors,
+          [error["property_path"]]: error.message
         }));
-    };
+      });
 
-    const handleProfilePictureChange = (event) => {
-        setProfilePicture(event.target.files[0]);
+    errors
+      .filter(error => error["property_path"] === "invalid_uuid" || error["property_path"] === "invalid_file")
+      .forEach(error => {
+        toast.error(t(`ContactDetail.toast.${error.message}`));
+      });
+  }
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    ContactsController.deleteContact(id).then(response => {
+      setContact(response.data);
+      localStorage.setItem("toast", JSON.stringify({
+        type: "success",
+        message: t('ContactDetail.toast.deleted')
+      }));
+      window.location.href = "/contacts";
+    });
+  }
+
+  const handleInputChange = (event) => {
+    const {name, value} = event.target;
+    setContact(prevContact => ({
+      ...prevContact,
+      [name]: value
+    }));
+  };
+
+  const handleProfilePictureChange = (event) => {
+    setProfilePicture(event.target.files[0]);
+  }
+
+  const handleDeleteProfilePicture = async () => {
+    await ImagesController.deleteImageByContactId(id);
+    setContactImageUrl({});
+    toast.success(t('ContactDetail.toast.imageDeleted'));
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (!selectedGroups.includes(event.target.value)) {
+        setSelectedGroups([...selectedGroups, event.target.value]);
+      }
+      setCurrentGroup(null);
     }
+  }
 
-    const handleDeleteProfilePicture = async () => {
-        await ImagesController.deleteImageByContactId(id);
-        setContactImageUrl({});
-        toast.success(t('ContactDetail.toast.imageDeleted'));
+  const handleAddClick = () => {
+    setExtendedFields([...extendedFields, {field_name: "", field_value: ""}]);
+  };
+
+  const handleDeleteClick = (index) => {
+    const updatedFields = [...extendedFields];
+    updatedFields.splice(index, 1);
+    setExtendedFields(updatedFields);
+  };
+
+  const handleUpdateExtendedFields = (index, event, field) => {
+    const updatedFields = [...extendedFields];
+    updatedFields[index][field] = event.target.value;
+    setExtendedFields(updatedFields);
+  }
+
+  const loadProfilePicture = (image_name) => {
+    if (image_name) {
+      ImagesController.getImageByName(image_name)
+        .then(res => {
+          const imageUrl = ImageService.handleFile(res.data, id);
+          setContactImageUrl({
+            imageUrl,
+          });
+        })
     }
+  }
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            if (!selectedGroups.includes(event.target.value)) {
-                setSelectedGroups([...selectedGroups, event.target.value]);
-            }
-            setCurrentGroup(null);
-        }
-    }
+  return (
+    <div className="contact-detail">
+      <h1>{t('ContactDetail.title')}</h1>
+      {contact && (
+        <form onSubmit={handleSubmit}>
+          <FormInput label={t('ContactDetail.field.firstName')}
+                     type="text"
+                     name="firstname"
+                     value={contact.firstname || ""}
+                     onChange={handleInputChange}
+                     error={errors.firstname}/>
+          <FormInput label={t('ContactDetail.field.lastName')}
+                     type="text"
+                     name="lastname"
+                     value={contact.lastname || ""}
+                     onChange={handleInputChange}
+                     error={errors.lastname}/>
+          <FormInput label={t('ContactDetail.field.email')}
+                     type="text"
+                     name="email"
+                     value={contact.email || ""}
+                     onChange={handleInputChange}
+                     error={errors.email}/>
+          <FormInput label={t('ContactDetail.field.phone')}
+                     type="text"
+                     name="phone"
+                     value={contact.phone || ""}
+                     onChange={handleInputChange}
+                     error={errors.phone}/>
+          <div className="extended_fields">
+            <div className="add-button" onClick={handleAddClick}>
+              <p>{t('ContactDetail.button.addExtendedFields')}</p>
+              <IoMdAddCircleOutline className="icon" onClick={handleAddClick}/>
+            </div>
 
-    const handleAddClick = () => {
-        setExtendedFields([...extendedFields, {field_name: "", field_value: ""}]);
-    };
+            {extendedFields.map((field, index) => (
+              <div key={index}>
+                <FormAdditionalInput fieldName={field.field_name}
+                                     fieldValue={field.field_value}
+                                     onUpdateName={() => handleUpdateExtendedFields(index, event, "field_name")}
+                                     onUpdateValue={() => handleUpdateExtendedFields(index, event, "field_value")}/>
+                <div className="delete-button">
+                  <p>{t('ContactDetail.button.deleteExtendedFields')}</p>
+                  <IoMdRemoveCircleOutline className="icon" onClick={() => handleDeleteClick(index)}/>
+                </div>
+              </div>
+            ))}
+          </div>
+          <FormInputGroups label={t('ContactDetail.field.groups')}
+                           type="text"
+                           name="groups"
+                           allGroups={groups}
+                           selectedGroups={selectedGroups}
+                           currentGroup={currentGroup || ""}
+                           onChange={(event) => setCurrentGroup(event.target.value)}
+                           selectInDropdown={(event) => {
+                             if (!selectedGroups.includes(event.target.value)) {
+                               setSelectedGroups([...selectedGroups, event.target.value]);
+                             }
+                           }}
+                           inputPlaceholder={t('ContactDetail.field.groupsPlaceholder')}
+                           selectPlaceholder={t('ContactDetail.field.groupsSelectPlaceholder')}
+                           handleKeyDown={handleKeyDown}
+                           deleteGroup={(group) => setSelectedGroups(selectedGroups.filter(g => g !== group))}/>
 
-    const handleDeleteClick = (index) => {
-        const updatedFields = [...extendedFields];
-        updatedFields.splice(index, 1);
-        setExtendedFields(updatedFields);
-    };
-
-    const handleUpdateExtendedFields = (index, event, field) => {
-        const updatedFields = [...extendedFields];
-        updatedFields[index][field] = event.target.value;
-        setExtendedFields(updatedFields);
-    }
-
-    const loadProfilePicture = (image_name) => {
-        if (image_name) {
-            ImagesController.getImageByName(image_name)
-                .then(res => {
-                    const imageUrl = ImageService.handleFile(res.data, id);
-                    setContactImageUrl({
-                        imageUrl,
-                    });
-                })
-        }
-    }
-
-    return (
-        <div className="contact-detail">
-            <h1>{t('ContactDetail.title')}</h1>
-            {contact && (
-                <form onSubmit={handleSubmit}>
-                    <FormInput label={t('ContactDetail.field.firstName')}
-                               type="text"
-                               name="firstname"
-                               value={contact.firstname || ""}
-                               onChange={handleInputChange}
-                               error={errors.firstname}/>
-                    <FormInput label={t('ContactDetail.field.lastName')}
-                               type="text"
-                               name="lastname"
-                               value={contact.lastname || ""}
-                               onChange={handleInputChange}
-                               error={errors.lastname}/>
-                    <FormInput label={t('ContactDetail.field.email')}
-                               type="text"
-                               name="email"
-                               value={contact.email || ""}
-                               onChange={handleInputChange}
-                               error={errors.email}/>
-                    <FormInput label={t('ContactDetail.field.phone')}
-                               type="text"
-                               name="phone"
-                               value={contact.phone || ""}
-                               onChange={handleInputChange}
-                               error={errors.phone}/>
-                    <div className="extended_fields">
-                        <div className="add-button" onClick={handleAddClick}>
-                            <p>{t('ContactDetail.button.addExtendedFields')}</p>
-                            <IoMdAddCircleOutline className="icon" onClick={handleAddClick}/>
-                        </div>
-
-                        {extendedFields.map((field, index) => (
-                            <div key={index}>
-                                <FormAdditionalInput fieldName={field.field_name}
-                                                     fieldValue={field.field_value}
-                                                     onUpdateName={() => handleUpdateExtendedFields(index, event, "field_name")}
-                                                     onUpdateValue={() => handleUpdateExtendedFields(index, event, "field_value")}/>
-                                <div className="delete-button">
-                                    <p>{t('ContactDetail.button.deleteExtendedFields')}</p>
-                                    <IoMdRemoveCircleOutline className="icon" onClick={() => handleDeleteClick(index)}/>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <FormInputGroups label={t('ContactDetail.field.groups')}
-                                     type="text"
-                                     name="groups"
-                                     allGroups={groups}
-                                     selectedGroups={selectedGroups}
-                                     currentGroup={currentGroup || ""}
-                                     onChange={(event) => setCurrentGroup(event.target.value)}
-                                     selectInDropdown={(event) => {
-                                         if (!selectedGroups.includes(event.target.value)) {
-                                             setSelectedGroups([...selectedGroups, event.target.value]);
-                                         }
-                                     }}
-                                     inputPlaceholder={t('ContactDetail.field.groupsPlaceholder')}
-                                     selectPlaceholder={t('ContactDetail.field.groupsSelectPlaceholder')}
-                                     handleKeyDown={handleKeyDown}
-                                     deleteGroup={(group) => setSelectedGroups(selectedGroups.filter(g => g !== group))}/>
-
-                    <FormInputImage label={t('ContactDetail.field.profilePicture')}
-                                    name="profilePicture"
-                                    onChange={handleProfilePictureChange}
-                                    imageUrl={contactImagesUrl.imageUrl}
-                                    deleteImage={handleDeleteProfilePicture}/>
+          <FormInputImage label={t('ContactDetail.field.profilePicture')}
+                          name="profilePicture"
+                          onChange={handleProfilePictureChange}
+                          imageUrl={contactImagesUrl.imageUrl}
+                          deleteImage={handleDeleteProfilePicture}/>
 
 
-                    <div className="buttons-container">
-                        <div className="button-field">
-                            <Button type="secondary"
-                                    content={t('ContactDetail.button.return')}
-                                    link="/contacts"/>
-                        </div>
-                        <div className="button-field">
-                            <FormButton buttonType="primary"
-                                        type="submit"
-                                        content={t('ContactDetail.button.submit')}/>
-                        </div>
-                        {action === "PUT" && (
-                            <div className="button-field">
-                                <FormButton buttonType="danger"
-                                            type="button"
-                                            content={t('ContactDetail.button.delete')}
-                                            onClick={handleDelete}/>
-                            </div>
-                        )}
-                    </div>
-                </form>
+          <div className="buttons-container">
+            <div className="button-field">
+              <Button type="secondary"
+                      content={t('ContactDetail.button.return')}
+                      link="/contacts"/>
+            </div>
+            <div className="button-field">
+              <FormButton buttonType="primary"
+                          type="submit"
+                          content={t('ContactDetail.button.submit')}/>
+            </div>
+            {action === "PUT" && (
+              <div className="button-field">
+                <FormButton buttonType="danger"
+                            type="button"
+                            content={t('ContactDetail.button.delete')}
+                            onClick={handleDelete}/>
+              </div>
             )}
-        </div>
-    );
+          </div>
+        </form>
+      )}
+    </div>
+  );
 }
 
 
