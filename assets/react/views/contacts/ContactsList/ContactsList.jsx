@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import ContactCard from "../../../components/Card/ContactCard";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button/Button";
 import Paginator from "../../../components/Paginator/Paginator";
 import toast from "react-hot-toast";
@@ -11,7 +11,7 @@ import ImagesController from "../../../../controllers/images.controller";
 import ImageService from "../../../../services/image.service";
 
 const ContactsList = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -77,7 +77,7 @@ const ContactsList = () => {
 
   const handleFilterSelectChange = (e) => {
     setSelectedFilter(e.target.value);
-    handleFilterValueContacts({target: {value: filterValue, selectedFilter: e.target.value}});
+    handleFilterValueContacts({ target: { value: filterValue, selectedFilter: e.target.value } });
 
   }
 
@@ -88,24 +88,20 @@ const ContactsList = () => {
 
 
     if (filter !== '' && value !== '') {
-      switch (filter) {
-        case 'groups':
-          setFilteredContacts(contacts.filter(contact => contact.groups.find(group => group.name.toLowerCase().includes(value.toLowerCase()))));
-          setDisplayedContacts(contacts.filter(contact => contact.groups.find(group => group.name.toLowerCase().includes(value.toLowerCase()))).slice(0, contactsPerPage));
-          setTotalPages(Math.ceil(contacts.filter(contact => contact.groups.find(group => group.name.toLowerCase().includes(value.toLowerCase()))).length / contactsPerPage));
-          break;
-        case 'contact_extended_fields':
-          const extendedFilter = filter.split('.')[1];
+      if (filter === 'groups') {
+        setFilteredContacts(contacts.filter(contact => contact.groups.find(group => group.name.toLowerCase().includes(value.toLowerCase()))));
+        setDisplayedContacts(contacts.filter(contact => contact.groups.find(group => group.name.toLowerCase().includes(value.toLowerCase()))).slice(0, contactsPerPage));
+        setTotalPages(Math.ceil(contacts.filter(contact => contact.groups.find(group => group.name.toLowerCase().includes(value.toLowerCase()))).length / contactsPerPage));
+      } else if (filter.includes('contact_extended_fields')) {
+        const extendedFilter = filter.split('.')[1];
 
-          setFilteredContacts(contacts.filter(contact => contact.contact_extended_fields.find(field => field.field_name === extendedFilter && field.field_value.toLowerCase().includes(value.toLowerCase()))));
-          setDisplayedContacts(contacts.filter(contact => contact.contact_extended_fields.find(field => field.field_name === extendedFilter && field.field_value.toLowerCase().includes(value.toLowerCase()))).slice(0, contactsPerPage));
-          setTotalPages(Math.ceil(contacts.filter(contact => contact.contact_extended_fields.find(field => field.field_name === extendedFilter && field.field_value.toLowerCase().includes(value.toLowerCase()))).length / contactsPerPage));
-          break;
-        default:
-          setFilteredContacts(contacts.filter(contact => contact[filter].toLowerCase().includes(value.toLowerCase())));
-          setDisplayedContacts(contacts.filter(contact => contact[filter].toLowerCase().includes(value.toLowerCase())).slice(0, contactsPerPage));
-          setTotalPages(Math.ceil(contacts.filter(contact => contact[filter].toLowerCase().includes(value.toLowerCase())).length / contactsPerPage));
-          break;
+        setFilteredContacts(contacts.filter(contact => contact.contact_extended_fields.find(field => field.field_name === extendedFilter && field.field_value.toLowerCase().includes(value.toLowerCase()))));
+        setDisplayedContacts(contacts.filter(contact => contact.contact_extended_fields.find(field => field.field_name === extendedFilter && field.field_value.toLowerCase().includes(value.toLowerCase()))).slice(0, contactsPerPage));
+        setTotalPages(Math.ceil(contacts.filter(contact => contact.contact_extended_fields.find(field => field.field_name === extendedFilter && field.field_value.toLowerCase().includes(value.toLowerCase()))).length / contactsPerPage));
+      } else {
+        setFilteredContacts(contacts.filter(contact => contact[filter]?.toLowerCase().includes(value?.toLowerCase())));
+        setDisplayedContacts(contacts.filter(contact => contact[filter]?.toLowerCase().includes(value?.toLowerCase())).slice(0, contactsPerPage));
+        setTotalPages(Math.ceil(contacts.filter(contact => contact[filter]?.toLowerCase().includes(value?.toLowerCase())).length / contactsPerPage));
       }
     } else {
       setFilteredContacts(contacts);
@@ -120,8 +116,8 @@ const ContactsList = () => {
         <h1>{t('ContactsList.title')}</h1>
         <div className="buttons-container">
           <Button type="primary"
-                  link="/contacts/new"
-                  content={t('ContactsList.button.new')}/>
+            link="/contacts/new"
+            content={t('ContactsList.button.new')} />
         </div>
 
 
@@ -140,24 +136,24 @@ const ContactsList = () => {
               ))}
             </select>
             <input type="text"
-                   placeholder={t('ContactsList.filter.placeholder')}
-                   onChange={(event) => handleFilterValueContacts(event)}/>
+              placeholder={t('ContactsList.filter.placeholder')}
+              onChange={(event) => handleFilterValueContacts(event)} />
           </div>
         </div>
       </div>
       <div className="contacts-list__contacts">
         {displayedContacts.map((contact, index) => (
           <ContactCard key={index}
-                       contact={contact}
-                       imageUrl={contactImages[contact.id]}/>
+            contact={contact}
+            imageUrl={contactImages[contact.id]} />
         ))
         }
       </div>
       {filteredContacts.length === 0
         ? <p className="no-contacts">{t('ContactsList.noContacts')}</p>
         : <Paginator currentPage={currentPage}
-                     totalPages={totalPages}
-                     onPageChange={(page) => handlePageChange(page)}/>
+          totalPages={totalPages}
+          onPageChange={(page) => handlePageChange(page)} />
       }
     </div>
   );

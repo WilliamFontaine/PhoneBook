@@ -188,8 +188,17 @@ class ContactsController extends AbstractController
                 $this->em->remove($field);
             }
 
+            $groups = $contact->getGroups();
+
             $this->em->remove($contact);
             $this->em->flush();
+
+            foreach ($groups as $group) {
+                if(count($group->getContact()) === 0) {
+                    $this->em->remove($group);
+                    $this->em->flush();
+                }
+            }
 
             return new JsonResponse(['message' => 'Contacts deleted.'], Response::HTTP_OK);
         } catch (InvalidArgumentException $ignored) {
