@@ -12,6 +12,9 @@ at [http://localhost:8080/](http://localhost:8080/) using the following credenti
 |:----------:|:--------:|:---------------:|:---------------:|:---------:|
 | PostgreSQL | database | _your username_ | _your password_ | phonebook |
 
+## Subject
+
+You can find the subject of the project in the `docs` folder.
 ## Installation
 
 To set up the application, ensure that Docker and Docker Compose are installed on your machine.  
